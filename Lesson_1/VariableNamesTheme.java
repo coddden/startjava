@@ -1,6 +1,6 @@
 public class VariableNamesTheme {
     public static void main(String[] args) {
-        System.out.println("1.Разные переменные\n");
+        System.out.println("\n1.Разные переменные\n");
         // цифра
         int digit = 10;
         System.out.println("цифра = " + digit);
@@ -84,9 +84,9 @@ public class VariableNamesTheme {
         System.out.println("путь до файла = " + filePath);
         // количество чисел в каждой строке
         int eachLineNumCount = 10;
-        System.out.println("количество чисел в каждой строке = " + eachLineNumCount + "\n");
+        System.out.println("количество чисел в каждой строке = " + eachLineNumCount);
 
-        System.out.println("2.boolean-переменные\n");
+        System.out.println("\n2.boolean-переменные\n");
         // сотни равны?
         boolean equalHundreds = true;
         System.out.println("сотни равны? = " + equalHundreds);
@@ -113,9 +113,9 @@ public class VariableNamesTheme {
         System.out.println("электронная почта действительная? = " + isValidEmail);
         // имеются уникальные строки?
         boolean hasUniqueLines = true;
-        System.out.println("имеются уникальные строки? = " + hasUniqueLines + "\n");
+        System.out.println("имеются уникальные строки? = " + hasUniqueLines);
 
-        System.out.println("3.Аббревиатуры\n");
+        System.out.println("\n3.Аббревиатуры\n");
         // старый universally unique identifier
         int uuidOld = 100;
         System.out.println("старый universally unique identifier = " + uuidOld);
