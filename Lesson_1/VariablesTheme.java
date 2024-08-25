@@ -8,7 +8,7 @@ public class VariablesTheme {
         short amountRam = 16;
         int amountSsd = 512;
         long frequencyRam = 3200L;
-        float frequencyProcessor = 2.5F;
+        float frequencyCpu = 2.5F;
         double screenSize = 15.6D;
         char genProcessor = 'X';
         boolean hasTouchScreen = false;
@@ -16,7 +16,7 @@ public class VariablesTheme {
         System.out.println("Объем оперативной памяти - " + amountRam);
         System.out.println("Объем физической памяти - " + amountSsd);
         System.out.println("Частота оперативной памяти - " + frequencyRam);
-        System.out.println("Частота процессора - " + frequencyProcessor);
+        System.out.println("Частота процессора - " + frequencyCpu);
         System.out.println("Диагональ экрана - " + screenSize);
         System.out.println("Поколение - " + genProcessor);
         System.out.println("Сенсорный экран - " + hasTouchScreen);
