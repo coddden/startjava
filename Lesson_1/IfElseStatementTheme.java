@@ -98,17 +98,18 @@ class IfElseStatementTheme {
 
         System.out.println("\n6.Подсчет начисленных банком %");
         double deposit = 321_123.59;
-        double interest = 0;
+        double interestRate = 0;
         if (deposit <= 100_000) {
-            interest = 0.05;
+            interestRate = 0.05;
         } else if (deposit > 100_000 && deposit <= 300_000) {
-            interest = 0.07;
+            interestRate = 0.07;
         } else if (deposit > 300_000) {
-            interest = 0.1;
+            interestRate = 0.1;
         }
+        double interest = deposit * interestRate;
         System.out.println("Сумма вклада - " + deposit);
-        System.out.println("Сумма начисленного % - " + (deposit * interest / 12));
-        System.out.println("Итоговая сумма с % - " + (deposit + (deposit * interest / 12)));
+        System.out.println("Сумма начисленного % - " + interest);
+        System.out.println("Итоговая сумма с % - " + (deposit + interest));
 
         System.out.println("\n7.Определение оценки по предметам");
         int historyPercent = 59;
@@ -129,8 +130,8 @@ class IfElseStatementTheme {
         } else if (programmingPercent > 73 && programmingPercent <= 91) {
             programmingGrade = 4;
         }
-        double averagePercent = (historyPercent + programmingPercent) / 2;
-        double averageGrade = (historyGrade + programmingGrade) / 2;
+        double averagePercent = (historyPercent + programmingPercent) / 2d;
+        double averageGrade = (historyGrade + programmingGrade) / 2d;
         System.out.println("История - " + historyGrade);
         System.out.println("Программирование - " + programmingGrade);
         System.out.println("Средний процент - " + averagePercent);
@@ -161,21 +162,19 @@ class IfElseStatementTheme {
 
         System.out.println("\n10.*Подсчет начисленных банком %");
         var deposit1 = new BigDecimal("321123.59");
-        var interest1 = BigDecimal.ZERO;
+        var interestRate1 = BigDecimal.ZERO;
         if (deposit1.compareTo(BigDecimal.valueOf(100000)) <= 0) {
-            interest1 = new BigDecimal("0.05");
+            interestRate1 = new BigDecimal("0.05");
         } else if (deposit1.compareTo(BigDecimal.valueOf(100000)) > 0 &&
                 deposit1.compareTo(BigDecimal.valueOf(300000)) <= 0) {
-            interest1 = new BigDecimal("0.07");
+            interestRate1 = new BigDecimal("0.07");
         } else if (deposit1.compareTo(BigDecimal.valueOf(300000)) > 0) {
-            interest1 = new BigDecimal("0.1");
+            interestRate1 = new BigDecimal("0.1");
         }
+        var interest1 = deposit1.multiply(interestRate1).setScale(2, RoundingMode.HALF_UP);
         System.out.println("Сумма вклада - " + deposit1);
-        System.out.println("Сумма начисленного % - " +
-                (deposit1.multiply(interest1)
-                .divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP)));
-        System.out.println("Итоговая сумма с % - " + 
-                (deposit1.add(deposit1.multiply(interest1)
-                .divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP))));
+        System.out.println("Сумма начисленного % - " + interest1);
+        System.out.println("Итоговая сумма с % - " + (deposit1.add(interest1))
+                .setScale(2, RoundingMode.HALF_UP));
     }
 }
