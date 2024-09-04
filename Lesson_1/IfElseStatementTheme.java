@@ -98,13 +98,11 @@ class IfElseStatementTheme {
 
         System.out.println("\n6.Подсчет начисленных банком %");
         double deposit = 321_123.59;
-        double interestRate = 0;
+        double interestRate = 0.1;
         if (deposit <= 100_000) {
             interestRate = 0.05;
         } else if (deposit > 100_000 && deposit <= 300_000) {
             interestRate = 0.07;
-        } else if (deposit > 300_000) {
-            interestRate = 0.1;
         }
         double interest = deposit * interestRate;
         System.out.println("Сумма вклада - " + deposit);
@@ -162,14 +160,12 @@ class IfElseStatementTheme {
 
         System.out.println("\n10.*Подсчет начисленных банком %");
         var deposit1 = new BigDecimal("321123.59");
-        var interestRate1 = BigDecimal.ZERO;
+        var interestRate1 = new BigDecimal("0.1");
         if (deposit1.compareTo(BigDecimal.valueOf(100000)) <= 0) {
             interestRate1 = new BigDecimal("0.05");
         } else if (deposit1.compareTo(BigDecimal.valueOf(100000)) > 0 &&
                 deposit1.compareTo(BigDecimal.valueOf(300000)) <= 0) {
             interestRate1 = new BigDecimal("0.07");
-        } else if (deposit1.compareTo(BigDecimal.valueOf(300000)) > 0) {
-            interestRate1 = new BigDecimal("0.1");
         }
         var interest1 = deposit1.multiply(interestRate1).setScale(2, RoundingMode.HALF_UP);
         System.out.println("Сумма вклада - " + deposit1);
