@@ -155,7 +155,7 @@ class IfElseStatementTheme {
         if (yearProfit1.compareTo(BigDecimal.ZERO) <= 0) {
             System.out.println("Прибыль за год " + yearProfit1 + " руб.");
         } else {
-            System.out.println("Прибыль за год " + "+" + yearProfit1 + " руб.");
+            System.out.println("Прибыль за год +" + yearProfit1 + " руб.");
         }
 
         System.out.println("\n10.*Подсчет начисленных банком %");

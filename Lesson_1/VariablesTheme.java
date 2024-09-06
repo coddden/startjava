@@ -9,7 +9,7 @@ public class VariablesTheme {
         int amountSsd = 512;
         long frequencyRam = 3200L;
         float frequencyCpu = 2.5F;
-        double screenSize = 15.6D;
+        double screenSize = 15.6;
         char genProcessor = 'X';
         boolean hasTouchScreen = false;
         System.out.println("Количество ядер - " + numCores);
@@ -58,7 +58,7 @@ public class VariablesTheme {
         System.out.println("long-- " + longMax + "\n");
         System.out.println("char " + (int) charMax++);
         System.out.println("char++ " + (int) charMax--);
-        System.out.println("char-- " + (int) charMax + "\n");
+        System.out.println("char-- " + (int) charMax);
 
         System.out.println("\n\n5.Перестановка значений переменных");
         int a = 2;
@@ -97,9 +97,9 @@ public class VariablesTheme {
         char openBracket = '(';
         char closeBracket = ')';
         System.out.println("    " + slash + backslash);
-        System.out.println("   " + slash + " " + " " + backslash);
+        System.out.println("   " + slash + "  " + backslash);
         System.out.println("  " + slash + underscore + openBracket + " " + closeBracket + backslash);
-        System.out.println(" " + slash + " " + " " + " " + " " + " " + " " + backslash);
+        System.out.println(" " + slash + "      " + backslash);
         System.out.println("" + slash + underscore + underscore + underscore + underscore + slash +
                 backslash + underscore + underscore + backslash);
 

@@ -159,8 +159,8 @@ public class VariableNamesTheme {
         System.out.println("старый universally unique identifier = " + oldUuid);
 
         // производитель оперативной памяти
-        String ramProducer = "Kingston";
-        System.out.println("производитель оперативной памяти = " + ramProducer);
+        String ramManufacturer = "Kingston";
+        System.out.println("производитель оперативной памяти = " + ramManufacturer);
 
         // емкость жесткого диска
         int hddSize = 100;
