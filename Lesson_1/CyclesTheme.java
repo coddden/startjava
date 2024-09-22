@@ -1,205 +1,212 @@
 public class CyclesTheme {
     public static void main(String[] args) {
-        System.out.println("\n1. Подсчет суммы четных и нечетных чисел");
-        int even = 0;
-        int odd = 0;
-        int a = -10;
-        int b = 21;
-        int c = a;
+        System.out.printf("%n1.Подсчет суммы четных и нечетных чисел%n");
+        int sumEvenNums = 0;
+        int sumOddNums = 0;
+        int firstValue = -10;
+        int secondValue = 21;
+        int segmentSize = firstValue;
         do {
-            if (c % 2 == 0) {
-                even += c;
+            if (segmentSize % 2 == 0) {
+                sumEvenNums += segmentSize;
             } else {
-                odd += c;
+                sumOddNums += segmentSize;
             }
-            c++;
-        } while (c < b);
-        System.out.println("В отрезке [" + a + ", " + b + "] сумма четных чисел = " +
-                even + ", а нечетных = " + odd);
+            segmentSize++;
+        } while (segmentSize <= secondValue);
+        System.out.printf("В отрезке [%d, %d] сумма четных чисел = %d, а нечетных = %d",
+                firstValue, secondValue, sumEvenNums, sumOddNums);
 
-        System.out.println("\n2. Вывод чисел между min и max в порядке убывания");
-        int d = 10;
-        int e = 5;
-        int f = -1;
-        int min = 0;
-        int max = 0;
-        if (d < e && d < f) {
-            min = d;
-        } else if (e < d && e < f) {
-            min = e;
-        } else if (f < d && f < e) {
-            min = f;
+        System.out.printf("%n%n2.Вывод чисел между min и max в порядке убывания%n");
+        int minNum = 10;
+        int middleNum = 5;
+        int maxNum = -1;
+        for (int i = 0; i < 2; i++) {
+            if (minNum > middleNum) {
+                int swap = minNum;
+                minNum = middleNum;
+                middleNum = swap;
+            }
+            if (middleNum > maxNum) {
+                int swap = middleNum;
+                middleNum = maxNum;
+                maxNum = swap;
+            }
         }
-        if (d > e && d > f) {
-            max = d;
-        } else if (e > d && e > f) {
-            max = e;
-        } else if (f > d && f > e) {
-            max = f;
-        }
-        for (int g = max; g >= min; g--) {
-            System.out.print(g + "  ");
+        for (int i = maxNum - 1; i > minNum; i--) {
+            System.out.printf("%d ", i);
         }
 
-        System.out.println("\n\n3.Вывод реверсивного числа и суммы его цифр");
-        String num = "1234";
-        int sum = 0;
-        int h = 3;
-        while (h >= 0) {
-            System.out.print(num.charAt(h) + " ");
-            sum += (h + 1);
-            h--;
+        System.out.printf("%n%n3.Вывод реверсивного числа и суммы его цифр%n");
+        int reverseNum = 1234;
+        int sumDigits = 0;
+        while (reverseNum > 0) {
+            System.out.print(reverseNum % 10);
+            sumDigits += reverseNum % 10;
+            reverseNum /= 10;
         }
-        System.out.println("\nСумма выделенных цифр = " + sum);
+        System.out.printf("%nСумма выделенных цифр = %d%n", sumDigits);
 
-        System.out.println("\n4.Вывод чисел в несколько строк");
-        int j = 0;
-        for (int i = 1; i <= 24; i++) {
+        System.out.printf("%n4.Вывод чисел в несколько строк%n");
+        int rowSize = 0;
+        for (int i = 1; i < 24; i++) {
             if (i % 2 != 0) {
                 System.out.printf("%5d", i);
-                j++;
-                if (j % 5 == 0) {
+                rowSize++;
+                if (rowSize % 5 == 0) {
                     System.out.println();
                 }
             }
         }
-        while (j % 5 != 0) {
+        while (rowSize % 5 != 0) {
             System.out.printf("%5d", 0);
-            j++;
+            rowSize++;
         }
 
-        System.out.println("\n\n5.Проверка количества двоек числа на четность/нечетность");
-        String numWithTwos = "3242592";
+        System.out.printf("%n%n5.Проверка количества двоек числа на четность/нечетность%n");
+        int initNumWithTwos = 3242592;
+        int numWithTwos = initNumWithTwos;
         int numTwos = 0;
-        int count = 0;
-        while (count < 7) {
-            if (numWithTwos.charAt(count) == '2') {
+        while (numWithTwos > 0) {
+            if ((numWithTwos % 10) == 2) {
                 numTwos++;
             }
-            count++;
+            numWithTwos /= 10;
         }
-        String evenOdd;
+        String evenOrOdd;
         if (numTwos % 2 == 0) {
-            evenOdd = "четное";
+            evenOrOdd = "четное";
         } else {
-            evenOdd = "нечетное";
+            evenOrOdd = "нечетное";
         }
-        System.out.printf("В %s %s (%d) количество двоек", numWithTwos, evenOdd, numTwos);
+        System.out.printf("В %d %s (%d) количество двоек", initNumWithTwos, evenOrOdd, numTwos);
 
-        System.out.println("\n\n6.Вывод геометрических фигур\n");
-        for (int k = 0; k < 5; k++) {
-            for (int l = 0; l < 10; l++) {
+        System.out.printf("%n%n6.Вывод геометрических фигур%n%n");
+
+        // Прямоугольник
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
                 System.out.print("*");
             }
             System.out.println();
         }
         System.out.println();
 
-        int n = 0;
-        while (n < 5) {
-            int m = n + 1;
-            while (m < 6) {
+        // Прямоугольный треугольник
+        int triangleRow = 0;
+        while (triangleRow < 5) {
+            int triangleItem = triangleRow + 1;
+            while (triangleItem < 6) {
                 System.out.print("#");
-                m++;
+                triangleItem++;
             }
             System.out.println();
-            n++;
+            triangleRow++;
         }
         System.out.println();
 
-        int o = 0;
-        int p = 0;
-        int newRow = 1;
+        // Равнобедренный треугольник
+        int triangleRow1 = 0;
+        int itemCounter = 0;
+        int triangleItem1 = 1;
         do {
-            if (newRow == p) {
+            if (triangleItem1 == itemCounter) {
                 System.out.println();
-                newRow++;
-                p = 0;
+                triangleItem1++;
+                itemCounter = 0;
             }
             System.out.print("$");
-            o++;
-            p++;
-        } while (o < 6);
+            triangleRow1++;
+            itemCounter++;
+        } while (triangleRow1 < 6);
         System.out.println();
-        int q = 0;
-        int r = 0;
-        int newRow1 = 2;
+        int triangleRow2 = 0;
+        int itemCounter2 = 0;
+        int triangleItem2 = 2;
         do {
-            if (newRow1 == r) {
+            if (triangleItem2 == itemCounter2) {
                 System.out.println();
-                newRow1--;
-                r = 0;
+                triangleItem2--;
+                itemCounter2 = 0;
             }
             System.out.print("$");
-            q++;
-            r++;
-        } while (q < 3);
+            triangleRow2++;
+            itemCounter2++;
+        } while (triangleRow2 < 3);
 
-        System.out.println("\n\n7.Вывод ASCII-символов");
+        System.out.printf("%n%n7.Вывод ASCII-символов%n");
         System.out.println("DECIMAL   CHARACTER   DESCRIPTION");
-        for (int s = 33; s <= 47; s++) {
-            if (s % 2 != 0) {
-                System.out.printf("%4d %10c %10s %-1s %n", s, s, " ", Character.getName(s));
+        for (int i = 33; i <= 47; i++) {
+            if (i % 2 != 0) {
+                System.out.printf("%4d %10c %10s %-1s %n", i, i, " ", Character.getName(i));
             }
         }
-        for (int t = 97; t <= 122; t++) {
-            if (t % 2 == 0) {
-                System.out.printf("%4d %10c %10s %-10s %n", t, t, " ", Character.getName(t));
+        for (int i = 97; i <= 122; i++) {
+            if (i % 2 == 0) {
+                System.out.printf("%4d %10c %10s %-10s %n", i, i, " ", Character.getName(i));
             }
         }
 
-        System.out.println("\n\n8.Проверка, является ли число палиндромом");
-        String numPalindrome = "1234321";
-        int u = 0;
-        int v = 6;
-        boolean isPalindrome = true;
-        while (u <= v) {
-            if (numPalindrome.charAt(u) != numPalindrome.charAt(v)) {
-                isPalindrome = false;
-                break;
+        System.out.printf("%n%n8.Проверка, является ли число палиндромом%n");
+        int initPalindrome = 1234321;
+        int palindrome = initPalindrome;
+        int reversePalindrome = 0;
+        int multiplier = 1000000;
+        while (palindrome > 0) {
+            reversePalindrome += (palindrome % 10) * multiplier;
+            palindrome /= 10;
+            multiplier /= 10;
+        }
+        if (initPalindrome == reversePalindrome) {
+            System.out.printf("Число %d - палиндром", initPalindrome);
+        }
+
+        System.out.printf("%n%n9.Проверка, является ли число счастливым%n");
+        int initLuckyNum = 316145;
+        int luckyNum = initLuckyNum;
+        int leftHalfSum = 0;
+        int rightHalfSum = 0;
+        int leftHalf = 0;
+        int rightHalf = 0;
+        int multiplier1 = 1;
+        for (int i = 0; i < 6; i++) {
+            if (multiplier1 == 1000) {
+                multiplier1 = 1;
             }
-            u++;
-            v--;
+            if (i < 3) {
+                rightHalfSum += luckyNum % 10;
+                rightHalf += (luckyNum % 10) * multiplier1;
+                multiplier1 *= 10;
+            } else {
+                leftHalfSum += luckyNum % 10;
+                leftHalf += (luckyNum % 10) * multiplier1;
+                multiplier1 *= 10;
+            }
+            luckyNum /= 10;
         }
-        if (isPalindrome) {
-            System.out.printf("Число %s - палиндром", numPalindrome);
-        } else {
-            System.out.printf("Число %s - не палиндром", numPalindrome);
-        }
-
-        System.out.println("\n\n9.Проверка, является ли число счастливым");
-        int luckyNum = 789987;
-        int firstNum = luckyNum / 100000;
-        int secondNum = luckyNum % 100000 / 10000;
-        int thirdNum = luckyNum % 10000 / 1000;
-        int fourthNum = luckyNum % 1000 / 100;
-        int fifthNum = luckyNum % 100 / 10;
-        int sixthNum = luckyNum % 10;
-        int leftHalf = firstNum + secondNum + thirdNum;
-        int rightHalf = fourthNum + fifthNum + sixthNum;
-        if (leftHalf == rightHalf) {
-            System.out.printf("Число %d - счастливое %n", luckyNum);
-            System.out.printf("Сумма цифр %d%d%d = %d%n", firstNum, secondNum, thirdNum, leftHalf);
-            System.out.printf("Сумма цифр %d%d%d = %d%n", fourthNum, fifthNum, sixthNum, rightHalf);
+        if (leftHalfSum == rightHalfSum) {
+            System.out.printf("Число %d - счастливое%n", initLuckyNum);
+            System.out.printf("Сумма цифр %d = %d%n", leftHalf, leftHalfSum);
+            System.out.printf("Сумма цифр %d = %d%n", rightHalf, rightHalfSum);
         }
 
-        System.out.println("\n\n10.Вывод таблицы умножения Пифагора");
-        System.out.printf("%n%28S%n%n", "таблица   пифагора");
-        for (int y = 1; y <= 9; y++) {
-            if (y == 2) {
-                for (int x1 = 0; x1 < 39; x1++) {
+        System.out.printf("%n%n10.Вывод таблицы умножения Пифагора%n%n");
+        System.out.printf("%28S%n%n", "таблица   пифагора");
+        for (int i = 1; i <= 9; i++) {
+            if (i == 2) {
+                for (int k = 0; k < 39; k++) {
                     System.out.print("-");
                 }
                 System.out.println();
             }
-            for (int x = 1; x <= 9; x++) {
-                if (x == 1 && y == 1) {
+            for (int j = 1; j <= 9; j++) {
+                if (j == 1 && i == 1) {
                     System.out.printf("%4s", " ");
                 } else {
-                    if (x == 2) {
+                    if (j == 2) {
                         System.out.printf("%2s", "|");
                     }
-                    System.out.printf("%4d", y * x);
+                    System.out.printf("%4d", i * j);
                 }
             }
             System.out.println();
