@@ -3,9 +3,9 @@ public class CyclesTheme {
         System.out.printf("%n1.Подсчет суммы четных и нечетных чисел%n");
         int sumEvenNums = 0;
         int sumOddNums = 0;
-        int segmentBottomLimit = -10;
-        int segmentTopLimit = 21;
-        int counter = segmentBottomLimit;
+        int startSegment = -10;
+        int endSegment = 21;
+        int counter = startSegment;
         do {
             if (counter % 2 == 0) {
                 sumEvenNums += counter;
@@ -13,47 +13,44 @@ public class CyclesTheme {
                 sumOddNums += counter;
             }
             counter++;
-        } while (counter <= segmentTopLimit);
+        } while (counter <= endSegment);
         System.out.printf("В отрезке [%d, %d] сумма четных чисел = %d, а нечетных = %d",
-                segmentBottomLimit, segmentTopLimit, sumEvenNums, sumOddNums);
+                startSegment, endSegment, sumEvenNums, sumOddNums);
 
         System.out.printf("%n%n2.Вывод чисел между min и max в порядке убывания%n");
-        int minNum = 10;
-        int middleNum = 5;
-        int maxNum = -1;
-        if (minNum > middleNum) {
-            int swap = minNum;
-            minNum = middleNum;
-            middleNum = swap;
+        int a = 5;
+        int b = 10;
+        int c = -1;
+        int minNum = 0;
+        int maxNum = 0;
+        if (a > b) {
+            maxNum = a;
+            minNum = b;
+        } else {
+            maxNum = b;
+            minNum = a;
         }
-        if (middleNum > maxNum) {
-            int swap = middleNum;
-            middleNum = maxNum;
-            maxNum = swap;
+        if (maxNum < c) {
+            maxNum = c;
         }
-        if (minNum > middleNum) {
-            int swap = minNum;
-            minNum = middleNum;
-            middleNum = swap;
+        if (minNum > c) {
+            minNum = c;
         }
         for (int i = maxNum - 1; i > minNum; i--) {
             System.out.printf("%d ", i);
         }
 
         System.out.printf("%n%n3.Вывод реверсивного числа и суммы его цифр%n");
-        int correctNum = 1234;
-        int reverseNum = 0;
+        int sourceNum = 1234;
         int sumDigits = 0;
-        int currentOne = 0;
-        while (correctNum > 0) {
-            currentOne = correctNum % 10;
-            sumDigits += currentOne;
-            reverseNum += currentOne;
-            reverseNum *= 10;
-            correctNum /= 10;
+        int digit = 0;
+        while (sourceNum > 0) {
+            digit = sourceNum % 10;
+            sumDigits += digit;
+            System.out.print(digit);
+            sourceNum /= 10;
         }
-        reverseNum /= 10;
-        System.out.printf("%d%nСумма выделенных цифр = %d%n", reverseNum, sumDigits);
+        System.out.printf("%nСумма выделенных цифр = %d%n", sumDigits);
 
         System.out.printf("%n4.Вывод чисел в несколько строк%n");
         int rowSize = 0;
