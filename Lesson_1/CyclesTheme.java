@@ -21,20 +21,19 @@ public class CyclesTheme {
         int a = 5;
         int b = 10;
         int c = -1;
-        int minNum = 0;
-        int maxNum = 0;
-        if (a > b) {
-            maxNum = a;
+        int minNum = a;
+        if (minNum > b) {
             minNum = b;
-        } else {
-            maxNum = b;
-            minNum = a;
-        }
-        if (maxNum < c) {
-            maxNum = c;
         }
         if (minNum > c) {
             minNum = c;
+        }
+        int maxNum = a;
+        if (maxNum < b) {
+            maxNum = b;
+        }
+        if (maxNum < c) {
+            maxNum = c;
         }
         for (int i = maxNum - 1; i > minNum; i--) {
             System.out.printf("%d ", i);
