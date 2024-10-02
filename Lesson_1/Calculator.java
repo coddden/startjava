@@ -5,7 +5,7 @@ public class Calculator {
         char mathSign = '^';
         int result = 0;
         boolean isComputed = false;
-        if (firstNum >= 0 && secondNum >= 0) {
+        if (firstNum > 0 && secondNum > 0) {
             if (mathSign == '+' || mathSign == '-' || mathSign == '*' ||
                     mathSign == '/' || mathSign == '%' || mathSign == '^') {
                 isComputed = true;
@@ -16,12 +16,7 @@ public class Calculator {
                 } else if (mathSign == '*') {
                     result = firstNum * secondNum;
                 } else if (mathSign == '/') {
-                    if (firstNum % secondNum == 0) {
-                        result = firstNum / secondNum;
-                    } else {
-                        isComputed = false;
-                        System.out.printf("%nКалькулятор работает только с натуральными числами%n");
-                    }
+                    result = firstNum / secondNum;
                 } else if (mathSign == '%') {
                     result = firstNum % secondNum;
                 } else if (mathSign == '^') {
