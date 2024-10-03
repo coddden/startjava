@@ -13,12 +13,11 @@ public class MyFirstGame {
                     System.out.printf("%n%d меньше того, что загадал компьютер%n", playerNum);
                 } else if (playerNum > coumputerNum) {
                     System.out.printf("%n%d больше того, что загадал компьютер%n", playerNum);
-                } else {
-                    System.out.println("Вы победили!");
                 }
             } else {
                 System.out.printf("%nЧисло должно быть в диапазоне 1-100%n");
             }
         }
+        System.out.println("Вы победили!");
     }
 }
