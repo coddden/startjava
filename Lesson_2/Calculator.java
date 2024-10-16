@@ -1,16 +1,16 @@
 public class Calculator {
 
-    private int firstNum;
-    private int secondNum;
+    private long firstNum;
+    private long secondNum;
     private char mathSign;
     private double result;
     private boolean isShow = true;
 
-    public void setFirstNum(int firstNum) {
+    public void setFirstNum(long firstNum) {
         this.firstNum = firstNum;
     }
 
-    public void setSecondNum(int secondNum) {
+    public void setSecondNum(long secondNum) {
         this.secondNum = secondNum;
     }
 
