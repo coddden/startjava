@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+public class CalculatorTest {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        Calculator calculator = new Calculator();
+        boolean isComputed = true;
+
+        while (isComputed) {
+            System.out.print("\nВведите первое число: ");
+            calculator.setFirstNum(scan.nextInt());
+            System.out.print("\nВведите знак операции (+, -, *, /, ^, %): ");
+            calculator.setMathSign(scan.next().charAt(0));
+            System.out.print("\nВведите второе число: ");
+            calculator.setSecondNum(scan.nextInt());
+            calculator.calculate();
+
+            while (true) {
+                String response;
+                System.out.print("\nХотите продолжить вычисления? [yes/no]: ");
+                response = scan.next();
+                if (response.equals("no")) {
+                    isComputed = false;
+                    break;
+                } else if (response.equals("yes")) {
+                    break;
+                }
+            }
+        }
+    }
+}
