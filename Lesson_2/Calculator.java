@@ -3,7 +3,6 @@ public class Calculator {
     private long firstNum;
     private long secondNum;
     private char mathSign;
-    private double result;
 
     public void setFirstNum(long firstNum) {
         this.firstNum = firstNum;
@@ -18,7 +17,7 @@ public class Calculator {
     }
 
     public void calculate() {
-        result = 0;
+        double result = 0;
         switch (mathSign) {
             case '+':
                 result = firstNum + secondNum;
@@ -42,9 +41,7 @@ public class Calculator {
                 break;
             case '^':
                 result = 1;
-                long secondNumCopy = secondNum;
-                secondNumCopy = secondNumCopy < 0 ? secondNumCopy *= -1 : secondNum;
-                for (int i = 0; i < secondNumCopy; i++) {
+                for (int i = 0; i < Math.abs(secondNum); i++) {
                     result *= firstNum;
                 }
                 result = secondNum < 0 ? 1 / result : result;
