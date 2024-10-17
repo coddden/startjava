@@ -4,7 +4,6 @@ public class Calculator {
     private long secondNum;
     private char mathSign;
     private double result;
-    private boolean isShow = true;
 
     public void setFirstNum(long firstNum) {
         this.firstNum = firstNum;
@@ -20,7 +19,6 @@ public class Calculator {
 
     public void calculate() {
         result = 0;
-        isShow = true;
         switch (mathSign) {
             case '+':
                 result = firstNum + secondNum;
@@ -35,8 +33,8 @@ public class Calculator {
                 if (secondNum != 0) {
                     result = (double) firstNum / secondNum;
                 } else {
-                    isShow = false;
                     System.out.printf("%nОшибка: деление на ноль запрещено%n");
+                    return;
                 }
                 break;
             case '%':
@@ -44,26 +42,18 @@ public class Calculator {
                 break;
             case '^':
                 result = 1;
-                if (secondNum < 0) {
-                    secondNum *= -1;
-                    for (int i = 0; i < secondNum; i++) {
-                        result *= firstNum;
-                    }
-                    result = 1 / result;
-                } else {
-                    for (int i = 0; i < secondNum; i++) {
-                        result *= firstNum;
-                    }
+                long secondNumCopy = secondNum;
+                secondNumCopy = secondNumCopy < 0 ? secondNumCopy *= -1 : secondNum;
+                for (int i = 0; i < secondNumCopy; i++) {
+                    result *= firstNum;
                 }
+                result = secondNum < 0 ? 1 / result : result;
                 break;
             default:
-                isShow = false;
                 System.out.printf("%nОшибка: операция '%s' не поддерживается.%n", mathSign);
                 System.out.printf("Доступны следующие операции: +, -, *, /, ^ %n");
-                break;
+                return;
         }
-        if (isShow) {
-            System.out.println("\nОтвет: " + result);
-        }
+        System.out.println("\nОтвет: " + result);
     }
 }
