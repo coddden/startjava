@@ -4,9 +4,10 @@ public class CalculatorTest {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         Calculator calculator = new Calculator();
-        String response = "yes";
+        String response = "";
 
-        while (response.equals("yes")) {
+        while (!response.equals("no")) {
+            response = "";
             System.out.print("\nВведите первое число: ");
             calculator.setFirstNum(scan.nextLong());
             System.out.print("\nВведите знак операции (+, -, *, /, ^, %): ");
@@ -15,12 +16,9 @@ public class CalculatorTest {
             calculator.setSecondNum(scan.nextLong());
             calculator.calculate();
 
-            while (!response.equals("no")) {
+            while (!(response.equals("no") || response.equals("yes"))) {
                 System.out.print("\nХотите продолжить вычисления? [yes/no]: ");
                 response = scan.next();
-                if (response.equals("no") || response.equals("yes")) {
-                    break;
-                }
             }
         }
     }
