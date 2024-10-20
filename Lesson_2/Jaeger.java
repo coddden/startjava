@@ -68,10 +68,10 @@ public class Jaeger {
     }
 
     public void drift() {
-        System.out.println("Пилоты " + this.modelName + " вошли в дрифт");
+        System.out.println("Пилоты " + modelName + " вошли в дрифт");
     }
 
     public void move() {
-        System.out.println(this.modelName + " сделал 5 шагов");
+        System.out.println(modelName + " сделал 5 шагов");
     }
 }
