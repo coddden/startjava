@@ -5,50 +5,54 @@ public class GuessNumber {
 
     private Player player1;
     private Player player2;
-    private int secretNum;
+    private Scanner scan = new Scanner(System.in);
+    private int secretNumber;
 
     public GuessNumber(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
     }
 
-    Scanner scan = new Scanner(System.in);
-    Player currentPlayer = player2;
-
     public void play() {
-        changeSecretNumber();
+        generateSecretNumber();
+        changeCurrentPlayer();
         do {
             changeCurrentPlayer();
             makeMove();
-            checkNumber();
-        } while (secretNum != currentPlayer.getNumber());
-        System.out.printf("%nВыиграл %s!%n", currentPlayer.getName());
+        } while (!isGuessed());
     }
 
-    private void changeSecretNumber() {
-        secretNum = 1 + (int) (Math.random() * 100);
+    private void generateSecretNumber() {
+        secretNumber = 1 + (int) (Math.random() * 100);
     }
 
     private void changeCurrentPlayer() {
-        currentPlayer = currentPlayer == player1 ? player2 : player1;
+        Player temp = player1;
+        player1 = player2;
+        player2 = temp;
     }
 
     private void makeMove() {
-        System.out.printf("%nХодит: %s ", currentPlayer.getName());
-        currentPlayer.setNumber(scan.nextInt());
+        System.out.printf("%nХодит: %s ", player1.getName());
+        player1.setNumber(scan.nextInt());
     }
 
-    private void checkNumber() {
-        if (currentPlayer.getNumber() >= 1 && currentPlayer.getNumber() <= 100) {
-            if (currentPlayer.getNumber() < secretNum) {
+    private boolean isGuessed() {
+        boolean isEqual = false;
+        if (player1.getNumber() >= 1 && player1.getNumber() <= 100) {
+            if (player1.getNumber() < secretNumber) {
                 System.out.printf("%n%d меньше того, что загадал компьютер%n",
-                        currentPlayer.getNumber());
-            } else if (currentPlayer.getNumber() > secretNum) {
+                        player1.getNumber());
+            } else if (player1.getNumber() > secretNumber) {
                 System.out.printf("%n%d больше того, что загадал компьютер%n",
-                        currentPlayer.getNumber());
+                        player1.getNumber());
+            } else {
+                isEqual = true;
+                System.out.printf("%nВыиграл %s!%n", player1.getName());
             }
         } else {
             System.out.printf("%nЧисло должно быть в диапазоне 1-100%n");
         }
+        return isEqual;
     }
 }
