@@ -17,8 +17,8 @@ public class GuessNumber {
 
     public void play() {
         changeSecretNumber();
-        changeCurrentPlayer();
         do {
+            changeCurrentPlayer();
             makeMove();
             checkNumber();
         } while (secretNum != currentPlayer.getNumber());
