@@ -37,14 +37,14 @@ public class GuessNumber {
     
     private boolean isGuessed(Player currentPlayer) {
         int playerNumber = currentPlayer.getNumber();
-        String playerName = currentPlayer.getName();
         String greaterOrLess = "меньше";
 
         if (playerNumber > 0 && playerNumber < 101) {
             if (playerNumber == secretNumber) {
-                System.out.printf("%nВыиграл %s!%n", playerName);
+                System.out.printf("%nВыиграл %s!%n", currentPlayer.getName());
                 return true;
-            } else if (playerNumber > secretNumber) {
+            }
+            if (playerNumber > secretNumber) {
                 greaterOrLess = "больше";
             }
             System.out.printf("%n%d %s того, что загадал компьютер%n", playerNumber, greaterOrLess);
