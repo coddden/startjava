@@ -27,27 +27,28 @@ public class GuessNumber {
     }
 
     private Player changeCurrentPlayer(Player currentPlayer) {
-        return currentPlayer = currentPlayer == player2 ? player1 : player2;
+        return currentPlayer == player2 ? player1 : player2;
     }
 
     private void makeMove(Player currentPlayer, Scanner scan) {
         System.out.printf("%nХодит: %s ", currentPlayer.getName());
         currentPlayer.setNumber(scan.nextInt());
     }
-
+    
     private boolean isGuessed(Player currentPlayer) {
-        if (currentPlayer.getNumber() >= 1 && currentPlayer.getNumber() <= 100) {
-            if (currentPlayer.getNumber() < secretNumber) {
-                System.out.printf("%n%d меньше того, что загадал компьютер%n",
-                        currentPlayer.getNumber());
-                return false;
-            } else if (currentPlayer.getNumber() > secretNumber) {
-                System.out.printf("%n%d больше того, что загадал компьютер%n",
-                        currentPlayer.getNumber());
-                return false;
+        int playerNumber = currentPlayer.getNumber();
+        String playerName = currentPlayer.getName();
+        String greaterOrLess = "меньше";
+
+        if (playerNumber > 0 && playerNumber < 101) {
+            if (playerNumber == secretNumber) {
+                System.out.printf("%nВыиграл %s!%n", playerName);
+                return true;
+            } else if (playerNumber > secretNumber) {
+                greaterOrLess = "больше";
             }
-            System.out.printf("%nВыиграл %s!%n", currentPlayer.getName());
-            return true;
+            System.out.printf("%n%d %s того, что загадал компьютер%n", playerNumber, greaterOrLess);
+            return false;
         }
         System.out.printf("%nЧисло должно быть в диапазоне 1-100%n");
         return false;
