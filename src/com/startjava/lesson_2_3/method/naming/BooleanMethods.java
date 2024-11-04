@@ -1,3 +1,5 @@
+package com.startjava.lesson_2_3.method.naming;
+
 public class BooleanMethods {
     public boolean shouldContinue() {
         System.out.print("\n\n\n" + MethodName.getCurrent() +
