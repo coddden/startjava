@@ -1,49 +1,49 @@
 package com.startjava.lesson_2_3_4.array;
 
-public class ReversedNumArray {
+import java.util.Arrays;
+
+public class ReversedNums {
     public static void main(String[] args) {
         int[] emptyArray = {};
-        reverse(emptyArray);
+        displayArray("До", emptyArray);
+        displayArray("После", reverse(emptyArray));
+        System.out.println();
 
         int[] nonExistArray = null;
-        reverse(nonExistArray);
-
-        int[] shortArray = {6, 8, 9, 1};
-        reverse(shortArray);
-
-        int[] longArray = {13, 8, 5, 3, 2, 1, 1};
-        reverse(longArray);
-    }
-
-    public static void reverse(int[] array) {
-        displayArray("До", array);
-        if (array != null && array.length > 0) {
-            int[] reverseArray = new int[array.length];
-            int count = 0;
-            for (int i = array.length - 1; i >= 0; i--) {
-                reverseArray[count] = array[i];
-                count++;
-            }
-            for (int i = 0; i < array.length; i++) {
-                array[i] = reverseArray[i];
-            }
-        }
-        displayArray("После", array);
+        displayArray("До", nonExistArray);
+        displayArray("После", reverse(nonExistArray));
         System.out.println();
+
+        int[] nums1 = {6, 8, 9, 1};
+        displayArray("До", nums1);
+        displayArray("После", reverse(nums1));
+        System.out.println();
+
+        int[] nums2 = {13, 8, 5, 3, 2, 1, 1};
+        displayArray("До", nums2);
+        displayArray("После", reverse(nums2));
     }
 
-    public static void displayArray(String beforeOrAfter, int[] array) {
-        System.out.printf("%5s реверса: [", beforeOrAfter);
-        if (array != null && array.length > 0) {
-            String separator = ", ";
-            for (int i = 0; i < array.length; i++) {
-                System.out.print(array[i]);
-                if (i == array.length - 1) {
-                    separator = "";
-                }
-                System.out.printf(separator);
+    public static void displayArray(String msg, int[] array) {
+        String result = Arrays.toString(array);
+        if (array != null) {
+            if (msg.equals("После") && array.length == 0) {
+                result = "Массив пуст";
             }
         }
-        System.out.printf("]%n");
+        System.out.printf("%5s реверса: %s%n", msg, result);
+    }
+
+    public static int[] reverse(int[] array) {
+        if (array == null || array.length == 0) {
+            return array;
+        }
+        int len = array.length;
+        int[] reversed = new int[len];
+        int index = 0;
+        for (int i = len - 1; i >= 0; i--) {
+            reversed[index++] = array[i];
+        }
+        return reversed;
     }
 }
