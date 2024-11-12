@@ -26,8 +26,11 @@ public class ReversedNums {
 
     public static void displayArray(String msg, int[] array) {
         String result = Arrays.toString(array);
+        if (array == null && msg.equals("После")) {
+            result = "Массив не существует";
+        }
         if (array != null) {
-            if (msg.equals("После") && array.length == 0) {
+            if (array.length == 0 && msg.equals("После")) {
                 result = "Массив пуст";
             }
         }
