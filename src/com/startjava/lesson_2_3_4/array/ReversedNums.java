@@ -5,34 +5,30 @@ import java.util.Arrays;
 public class ReversedNums {
     public static void main(String[] args) {
         int[] emptyArray = {};
-        displayArray("До", emptyArray);
-        displayArray("После", reverse(emptyArray));
+        display("До", emptyArray);
+        display("После", reverse(emptyArray));
         System.out.println();
 
         int[] nonExistArray = null;
-        displayArray("До", nonExistArray);
-        displayArray("После", reverse(nonExistArray));
+        display("До", nonExistArray);
+        display("После", reverse(nonExistArray));
         System.out.println();
 
-        int[] nums1 = {6, 8, 9, 1};
-        displayArray("До", nums1);
-        displayArray("После", reverse(nums1));
+        int[] fewNums = {6, 8, 9, 1};
+        display("До", fewNums);
+        display("После", reverse(fewNums));
         System.out.println();
 
-        int[] nums2 = {13, 8, 5, 3, 2, 1, 1};
-        displayArray("До", nums2);
-        displayArray("После", reverse(nums2));
+        int[] lotsNums = {13, 8, 5, 3, 2, 1, 1};
+        display("До", lotsNums);
+        display("После", reverse(lotsNums));
     }
 
-    public static void displayArray(String msg, int[] array) {
+    public static void display(String msg, int[] array) {
         String result = Arrays.toString(array);
         if (msg.equals("После")) {
-            if (array != null) {
-                if (array.length == 0) {
-                    result = "Массив пуст";
-                }
-            } else {
-                result = "Массив не существует";
+            if (array == null || array.length == 0) {
+                result = array == null ? "Массив не существует" : "Массив пуст";
             }
         }
         System.out.printf("%5s реверса: %s%n", msg, result);
