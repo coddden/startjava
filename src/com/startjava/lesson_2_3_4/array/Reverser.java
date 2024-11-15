@@ -2,7 +2,7 @@ package com.startjava.lesson_2_3_4.array;
 
 import java.util.Arrays;
 
-public class ReversedNums {
+public class Reverser {
     public static void main(String[] args) {
         int[] emptyArray = {};
         display("До", emptyArray);
@@ -14,17 +14,17 @@ public class ReversedNums {
         display("После", reverse(nonExistArray));
         System.out.println();
 
-        int[] fewNums = {6, 8, 9, 1};
-        display("До", fewNums);
-        display("После", reverse(fewNums));
+        int[] nums1 = {6, 8, 9, 1};
+        display("До", nums1);
+        display("После", reverse(nums1));
         System.out.println();
 
-        int[] lotsNums = {13, 8, 5, 3, 2, 1, 1};
-        display("До", lotsNums);
-        display("После", reverse(lotsNums));
+        int[] nums2 = {13, 8, 5, 3, 2, 1, 1};
+        display("До", nums2);
+        display("После", reverse(nums2));
     }
 
-    public static void display(String msg, int[] array) {
+    private static void display(String msg, int[] array) {
         String result = Arrays.toString(array);
         if (msg.equals("После")) {
             if (array == null || array.length == 0) {
@@ -34,7 +34,7 @@ public class ReversedNums {
         System.out.printf("%5s реверса: %s%n", msg, result);
     }
 
-    public static int[] reverse(int[] array) {
+    private static int[] reverse(int[] array) {
         if (array == null || array.length == 0) {
             return array;
         }

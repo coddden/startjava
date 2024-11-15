@@ -7,33 +7,55 @@ public class Factorial {
         int[] positiveNums = {8, 0, 9};
         int[] diffNums = {-3, 1, 7, 13};
         int[] negativeNums = {-22, -0};
-        calcFactorial(emptyArray, nonExistArray, positiveNums, diffNums, negativeNums);
+        getArray(emptyArray, nonExistArray, positiveNums, diffNums, negativeNums);
     }
 
-    public static void calcFactorial(int[]... numArrays) {
+    private static void getArray(int[]... numArrays) {
         for (int[] numArray : numArrays) {
-            if (numArray == null || numArray.length == 0) {
-                String emptyOrNotExist = numArray == null ? "не существует" : "пуст";
-                System.out.printf("Массив %s%n", emptyOrNotExist);
-                continue;
-            }
             System.out.println();
-            int len = numArray.length;
-            long[] resultArray = new long[len];
-            for (int i = 0; i < len; i++) {
-                if (numArray[i] < 0) {
-                    System.out.printf("Ошибка: факториал %d! не определен%n", numArray[i]);
-                    continue;
-                }
-                resultArray[i] = 1;
-                System.out.printf("%d! = ", numArray[i]);
-                for (int j = 1; j <= numArray[i]; j++) {
-                    String sign = j == numArray[i] ? " = " : " * ";
-                    System.out.print(numArray[i] == 1 ? "" : j + sign);
-                    resultArray[i] *= j;
-                }
-                System.out.printf("%d%n", resultArray[i]);
+            if (!isEmpty(numArray)) {
+                displayFactorial(numArray, calcFactorial(numArray));
             }
         }
+    }
+
+    private static boolean isEmpty(int[] numArray) {
+        boolean empty = false;
+        if (numArray == null || numArray.length == 0) {
+            String emptyOrNotExist = numArray == null ? "не существует" : "пуст";
+            System.out.printf("Массив %s%n", emptyOrNotExist);
+            empty = true;
+        }
+        return empty;
+    }
+
+    private static void displayFactorial(int[] numArray, long[] factorials) {
+        int len = numArray.length;
+        for (int i = 0; i < len; i++) {
+            int currentNum = numArray[i];
+            if (currentNum < 0) {
+                System.out.printf("Ошибка: факториал %d! не определен%n", currentNum);
+                continue;
+            }
+            System.out.printf("%d! = ", currentNum);
+            for (int j = 1; j <= currentNum; j++) {
+                String sign = j == currentNum ? " = " : " * ";
+                System.out.print(currentNum == 1 ? "" : j + sign);
+            }
+            System.out.printf("%d %s", factorials[i], currentNum == len - 1 ? "" : "\n");
+        }
+    }
+
+    private static long[] calcFactorial(int[] numArray) {
+        int len = numArray.length;
+        long[] factorials = new long[len];
+        for (int i = 0; i < len; i++) {
+            if (numArray[i] < 0) continue;
+            factorials[i] = 1;
+            for (int j = 1; j <= numArray[i]; j++) {
+                factorials[i] *= j;
+            }
+        }
+        return factorials;
     }
 }
