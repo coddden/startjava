@@ -13,20 +13,17 @@ public class Factorial {
     private static void getArray(int[]... numArrays) {
         for (int[] numArray : numArrays) {
             System.out.println();
-            if (!isEmpty(numArray)) {
+            if (isEmpty(numArray)) {
                 displayFactorial(numArray, calcFactorial(numArray));
             }
         }
     }
 
     private static boolean isEmpty(int[] numArray) {
-        boolean empty = false;
-        if (numArray == null || numArray.length == 0) {
-            String emptyOrNotExist = numArray == null ? "не существует" : "пуст";
-            System.out.printf("Массив %s%n", emptyOrNotExist);
-            empty = true;
-        }
-        return empty;
+        if (numArray != null && numArray.length > 0) return true;
+        String emptyOrNotExist = numArray == null ? "не существует" : "пуст";
+        System.out.printf("Массив %s%n", emptyOrNotExist);
+        return false;
     }
 
     private static void displayFactorial(int[] numArray, long[] factorials) {
