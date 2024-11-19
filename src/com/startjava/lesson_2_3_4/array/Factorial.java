@@ -2,34 +2,18 @@ package com.startjava.lesson_2_3_4.array;
 
 public class Factorial {
     public static void main(String[] args) {
-        int[] emptyArray = {};
-        int[] nonExistArray = null;
-        int[] positiveNums = {8, 0, 9};
-        int[] diffNums = {-3, 1, 7, 13};
-        int[] negativeNums = {-22, -0};
-        getArray(emptyArray, nonExistArray, positiveNums, diffNums, negativeNums);
+        displayFactorial(calcFactorial());
+        displayFactorial(calcFactorial(null));
+        displayFactorial(calcFactorial(8, 0, 9), 8, 0, 9);
+        displayFactorial(calcFactorial(-3, 1, 7, 13), -3, 1, 7, 13);
+        displayFactorial(calcFactorial(-22, -0), -22, -0);
     }
 
-    private static void getArray(int[]... numArrays) {
-        for (int[] numArray : numArrays) {
-            System.out.println();
-            if (isEmpty(numArray)) {
-                displayFactorial(numArray, calcFactorial(numArray));
-            }
-        }
-    }
-
-    private static boolean isEmpty(int[] numArray) {
-        if (numArray != null && numArray.length > 0) return true;
-        String emptyOrNotExist = numArray == null ? "не существует" : "пуст";
-        System.out.printf("Массив %s%n", emptyOrNotExist);
-        return false;
-    }
-
-    private static void displayFactorial(int[] numArray, long[] factorials) {
-        int len = numArray.length;
+    private static void displayFactorial(long[] factorials, int... nums) {
+        if (nums == null || nums.length == 0) return;
+        int len = nums.length;
         for (int i = 0; i < len; i++) {
-            int currentNum = numArray[i];
+            int currentNum = nums[i];
             if (currentNum < 0) {
                 System.out.printf("Ошибка: факториал %d! не определен%n", currentNum);
                 continue;
@@ -41,18 +25,26 @@ public class Factorial {
             }
             System.out.printf("%d %s", factorials[i], currentNum == len - 1 ? "" : "\n");
         }
+        System.out.println();
     }
 
-    private static long[] calcFactorial(int[] numArray) {
-        int len = numArray.length;
+    private static long[] calcFactorial(long... nums) {
+        if (isEmpty(nums)) return nums;
+        int len = nums.length;
         long[] factorials = new long[len];
         for (int i = 0; i < len; i++) {
-            if (numArray[i] < 0) continue;
+            if (nums[i] < 0) continue;
             factorials[i] = 1;
-            for (int j = 1; j <= numArray[i]; j++) {
+            for (int j = 1; j <= nums[i]; j++) {
                 factorials[i] *= j;
             }
         }
         return factorials;
+    }
+
+    private static boolean isEmpty(long[] numArray) {
+        if (numArray != null && numArray.length > 0) return false;
+        System.out.printf("Массив %s%n%n", numArray == null ? "не существует" : "пуст");
+        return true;
     }
 }
