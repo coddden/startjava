@@ -3,23 +3,24 @@ package com.startjava.lesson_2_3_4.array;
 public class ElementRemover {
     public static void main(String[] args) {
         int[] indexes = {-1, 15, 0, 14};
+        int srcArrayLength = 15;
         for (int index : indexes) {
-            if (!isValidIndex(index)) continue;
-            float[] srcArray = generateArray();
+            if (!isValidIndex(index, srcArrayLength)) continue;
+            float[] srcArray = generateArray(srcArrayLength);
             float[] modifiedArray = removeExceedElements(index, srcArray);
             int zeroedCells = countZeroedCells(modifiedArray);
             displayArrays(index, zeroedCells, srcArray, modifiedArray);
         }
     }
 
-    private static boolean isValidIndex(int index) {
-        if (index >= 0 && index < 15) return true;
+    private static boolean isValidIndex(int index, int arrayLength) {
+        if (index >= 0 && index < arrayLength) return true;
         System.out.printf("%nОшибка! Индекс не найден!%n");
         return false;
     }
 
-    private static float[] generateArray() {
-        float[] array = new float[15];
+    private static float[] generateArray(int srcArrayLength) {
+        float[] array = new float[srcArrayLength];
         for (int i = 0; i < array.length; i++) {
             array[i] = (float) Math.random();
         }
