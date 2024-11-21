@@ -9,25 +9,6 @@ public class Factorial {
         displayFactorial(calcFactorial(-22, -0), -22, -0);
     }
 
-    private static void displayFactorial(long[] factorials, int... nums) {
-        if (nums == null || nums.length == 0) return;
-        int len = nums.length;
-        for (int i = 0; i < len; i++) {
-            int currentNum = nums[i];
-            if (currentNum < 0) {
-                System.out.printf("Ошибка: факториал %d! не определен%n", currentNum);
-                continue;
-            }
-            System.out.printf("%d! = ", currentNum);
-            for (int j = 1; j <= currentNum; j++) {
-                String sign = j == currentNum ? " = " : " * ";
-                System.out.print(currentNum == 1 ? "" : j + sign);
-            }
-            System.out.printf("%d %s", factorials[i], currentNum == len - 1 ? "" : "\n");
-        }
-        System.out.println();
-    }
-
     private static long[] calcFactorial(long... nums) {
         if (isEmpty(nums)) return nums;
         int len = nums.length;
@@ -46,5 +27,24 @@ public class Factorial {
         if (numArray != null && numArray.length > 0) return false;
         System.out.printf("Массив %s%n%n", numArray == null ? "не существует" : "пуст");
         return true;
+    }
+
+    private static void displayFactorial(long[] factorials, int... nums) {
+        if (nums == null || nums.length == 0) return;
+        int len = nums.length;
+        for (int i = 0; i < len; i++) {
+            int currentNum = nums[i];
+            if (currentNum < 0) {
+                System.out.printf("Ошибка: факториал %d! не определен%n", currentNum);
+                continue;
+            }
+            System.out.printf("%d! = ", currentNum);
+            for (int j = 1; j <= currentNum; j++) {
+                String sign = j == currentNum ? " = " : " * ";
+                System.out.print(currentNum == 1 ? "" : j + sign);
+            }
+            System.out.printf("%d %s", factorials[i], currentNum == len - 1 ? "" : "\n");
+        }
+        System.out.println();
     }
 }
