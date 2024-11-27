@@ -2,14 +2,14 @@ package com.startjava.lesson_2_3_4.array;
 
 public class Factorial {
     public static void main(String[] args) {
-        displayFactorial(calcFactorial());
-        displayFactorial(calcFactorial(null));
-        displayFactorial(calcFactorial(8, 0, 9), 8, 0, 9);
-        displayFactorial(calcFactorial(-3, 1, 7, 13), -3, 1, 7, 13);
-        displayFactorial(calcFactorial(-22, -0), -22, -0);
+        display(calc());
+        display(calc(null));
+        display(calc(8, 0, 9), 8, 0, 9);
+        display(calc(-3, 1, 7, 13), -3, 1, 7, 13);
+        display(calc(-22, -0), -22, -0);
     }
 
-    private static long[] calcFactorial(long... nums) {
+    private static long[] calc(long... nums) {
         if (isEmpty(nums)) return nums;
         int len = nums.length;
         long[] factorials = new long[len];
@@ -29,7 +29,7 @@ public class Factorial {
         return true;
     }
 
-    private static void displayFactorial(long[] factorials, int... nums) {
+    private static void display(long[] factorials, int... nums) {
         if (nums == null || nums.length == 0) return;
         int len = nums.length;
         for (int i = 0; i < len; i++) {
