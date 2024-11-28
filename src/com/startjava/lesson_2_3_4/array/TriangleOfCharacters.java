@@ -2,19 +2,19 @@ package com.startjava.lesson_2_3_4.array;
 
 public class TriangleOfCharacters {
     public static void main(String[] args) {
-        sort('0', '9', true);
-        sort('/', '!', false);
-        sort('A', 'J', false);
+        create('0', '9', true);
+        create('/', '!', false);
+        create('A', 'J', false);
     }
 
-    private static void sort(int start, int end, boolean direction) {
+    private static void create(int start, int end, boolean direction) {
         if (isGreater(start, end)) return;
         int len = end - start + 1;
         char[] characters = new char[len];
         for (int i = 0; i < len; i++) {
             characters[i] = direction ? (char) start++ : (char) end--;
         }
-        makeTriangle(characters);
+        System.out.println(construct(characters));
     }
 
     private static boolean isGreater(int start, int end) {
@@ -25,7 +25,7 @@ public class TriangleOfCharacters {
         return false;
     }
 
-    private static void makeTriangle(char[] characters) {
+    private static StringBuilder construct(char[] characters) {
         int charAmount = 1;
         int offset = characters.length;
         StringBuilder triangle = new StringBuilder();
@@ -34,6 +34,6 @@ public class TriangleOfCharacters {
             triangle.append((character + "").repeat(charAmount)).append("\n");
             charAmount += 2;
         }
-        System.out.println(triangle);
+        return triangle;
     }
 }
