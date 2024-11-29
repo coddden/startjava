@@ -38,12 +38,14 @@ public class Factorial {
                 System.out.printf("Ошибка: факториал %d! не определен%n", currentNum);
                 continue;
             }
-            System.out.printf("%d! = ", currentNum);
+            StringBuilder factorialExp = new StringBuilder();
+            factorialExp.append(currentNum).append("! = ");
             for (int j = 1; j <= currentNum; j++) {
                 String sign = j == currentNum ? " = " : " * ";
-                System.out.print(currentNum == 1 ? "" : j + sign);
+                factorialExp.append(currentNum == 1 ? "" : j + sign);
             }
-            System.out.printf("%d %s", factorials[i], currentNum == len - 1 ? "" : "\n");
+            factorialExp.append(factorials[i]).append(currentNum == len - 1 ? "" : "\n");
+            System.out.print(factorialExp);
         }
         System.out.println();
     }
