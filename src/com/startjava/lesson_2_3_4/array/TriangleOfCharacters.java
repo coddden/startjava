@@ -2,30 +2,23 @@ package com.startjava.lesson_2_3_4.array;
 
 public class TriangleOfCharacters {
     public static void main(String[] args) {
-        create('0', '9', true);
-        create('/', '!', false);
-        create('A', 'J', false);
+        StringBuilder TriangleOfNums = create('0', '9', true);
+        System.out.print(TriangleOfNums == null ? "" : TriangleOfNums);
+
+        StringBuilder TriangleOfSigns = create('/', '!', false);
+        System.out.print(TriangleOfSigns == null ? "" : TriangleOfSigns);
+
+        StringBuilder TriangleOfLetters = create('A', 'J', false);
+        System.out.print(TriangleOfLetters == null ? "" : TriangleOfLetters);
     }
 
-    private static void create(int start, int end, boolean direction) {
-        if (isGreater(start, end)) return;
+    private static StringBuilder create(int start, int end, boolean direction) {
+        if (isGreater(start, end)) return null;
         int len = end - start + 1;
         char[] characters = new char[len];
         for (int i = 0; i < len; i++) {
             characters[i] = direction ? (char) start++ : (char) end--;
         }
-        System.out.println(construct(characters));
-    }
-
-    private static boolean isGreater(int start, int end) {
-        if (start > end) {
-            System.out.printf("Ошибка: левая граница (%d) > правой (%d)%n%n", start, end);
-            return true;
-        }
-        return false;
-    }
-
-    private static StringBuilder construct(char[] characters) {
         int charAmount = 1;
         int offset = characters.length;
         StringBuilder triangle = new StringBuilder();
@@ -35,5 +28,13 @@ public class TriangleOfCharacters {
             charAmount += 2;
         }
         return triangle;
+    }
+
+    private static boolean isGreater(int start, int end) {
+        if (start > end) {
+            System.out.printf("%nОшибка: левая граница (%d) > правой (%d)%n%n", start, end);
+            return true;
+        }
+        return false;
     }
 }
