@@ -5,8 +5,12 @@ public class ElementRemover {
         int[] indexes = {-1, 15, 0, 14};
         int srcArrayLength = 15;
         for (int index : indexes) {
-            displayResult(index, srcArrayLength,
-                    removeExceedElements(index, generateArray(index, srcArrayLength)));
+            float[] srcArray = generateArray(index, srcArrayLength);
+            if (srcArray == null) continue;
+            displayArray("Исходный", srcArray);
+            int zeroedCells = removeExceedElements(index, srcArray);
+            displayArray("Изменённый", srcArray);
+            System.out.printf("Индекс %d | Обнулённых ячеек %d%n", index, zeroedCells);
         }
     }
 
@@ -20,14 +24,12 @@ public class ElementRemover {
         for (int i = 0; i < srcArray.length; i++) {
             srcArray[i] = (float) Math.random();
         }
-        displayArray("Исходный", srcArray);
         return srcArray;
     }
 
     private static void displayArray(String modifiedOrNot, float[] array) {
-        int len = array.length;
         System.out.printf("%n%s массив%n", modifiedOrNot);
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < array.length; i++) {
             System.out.printf("%.3f%s", array[i], i == 7 ? "\n" : " ");
         }
         System.out.println();
@@ -35,23 +37,12 @@ public class ElementRemover {
 
     private static int removeExceedElements(int index, float[] array) {
         int zeroedCells = 0;
-        if (array == null) return zeroedCells;
-        int len = array.length;
-        float[] modifiedArray = new float[len];
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i] > array[index]) {
-                modifiedArray[i] = 0;
+                array[i] = 0;
                 zeroedCells++;
-            } else {
-                modifiedArray[i] = array[i];
             }
         }
-        displayArray("Изменённый", modifiedArray);
         return zeroedCells;
-    }
-
-    private static void displayResult(int index, int srcArrayLength, int zeroedCells) {
-        if (index < 0 || index >= srcArrayLength) return;
-        System.out.printf("Индекс %d | Обнулённых ячеек %d%n", index, zeroedCells);
     }
 }
