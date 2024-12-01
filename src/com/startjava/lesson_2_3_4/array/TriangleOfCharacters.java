@@ -2,17 +2,22 @@ package com.startjava.lesson_2_3_4.array;
 
 public class TriangleOfCharacters {
     public static void main(String[] args) {
-        if (isLess('0', '9')) System.out.print(create('0', '9', true));
-        if (isLess('/', '!')) System.out.print(create('/', '!', false));
-        if (isLess('A', 'J')) System.out.print(create('A', 'J', false));
+        StringBuilder triangleOfNums = isLess('0', '9', true);
+        if (triangleOfNums != null) System.out.print(triangleOfNums);
+
+        StringBuilder triangleOfSigns = isLess('/', '!', false);
+        if (triangleOfSigns != null) System.out.print(triangleOfSigns);
+
+        StringBuilder triangleOfLetters = isLess('A', 'J', false);
+        if (triangleOfLetters != null) System.out.print(triangleOfLetters);
     }
 
-    private static boolean isLess(int start, int end) {
+    private static StringBuilder isLess(int start, int end, boolean asc) {
         if (start > end) {
             System.out.printf("%nОшибка: левая граница (%d) > правой (%d)%n%n", start, end);
-            return false;
+            return null;
         }
-        return true;
+        return create(start, end, asc);
     }
 
     private static StringBuilder create(int start, int end, boolean asc) {
