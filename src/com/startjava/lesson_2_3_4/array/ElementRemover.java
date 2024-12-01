@@ -27,8 +27,8 @@ public class ElementRemover {
         return srcArray;
     }
 
-    private static void displayArray(String modifiedOrNot, float[] array) {
-        System.out.printf("%n%s массив%n", modifiedOrNot);
+    private static void displayArray(String msg, float[] array) {
+        System.out.printf("%n%s массив%n", msg);
         for (int i = 0; i < array.length; i++) {
             System.out.printf("%.3f%s", array[i], i == 7 ? "\n" : " ");
         }
