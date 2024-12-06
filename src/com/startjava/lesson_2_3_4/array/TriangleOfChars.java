@@ -29,9 +29,9 @@ public class TriangleOfChars {
         int charAmount = 1;
         int offset = len;
         StringBuilder triangle = new StringBuilder();
-        for (char char_ : chars) {
+        for (char character : chars) {
             triangle.append(" ".repeat(offset--));
-            triangle.append((char_ + "").repeat(charAmount)).append("\n");
+            triangle.append((character + "").repeat(charAmount)).append("\n");
             charAmount += 2;
         }
         return triangle;
