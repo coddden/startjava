@@ -1,6 +1,6 @@
 package com.startjava.lesson_2_3_4.array;
 
-public class TriangleOfCharacters {
+public class TriangleOfChars {
     public static void main(String[] args) {
         StringBuilder triangleOfNums = isLess('0', '9', true);
         if (triangleOfNums != null) System.out.print(triangleOfNums);
@@ -22,16 +22,16 @@ public class TriangleOfCharacters {
 
     private static StringBuilder create(int start, int end, boolean asc) {
         int len = end - start + 1;
-        char[] characters = new char[len];
+        char[] chars = new char[len];
         for (int i = 0; i < len; i++) {
-            characters[i] = asc ? (char) start++ : (char) end--;
+            chars[i] = asc ? (char) start++ : (char) end--;
         }
         int charAmount = 1;
         int offset = len;
         StringBuilder triangle = new StringBuilder();
-        for (char character : characters) {
+        for (char char1 : chars) {
             triangle.append(" ".repeat(offset--));
-            triangle.append((character + "").repeat(charAmount)).append("\n");
+            triangle.append((char1 + "").repeat(charAmount)).append("\n");
             charAmount += 2;
         }
         return triangle;
