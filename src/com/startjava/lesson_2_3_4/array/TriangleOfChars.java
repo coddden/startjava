@@ -2,25 +2,18 @@ package com.startjava.lesson_2_3_4.array;
 
 public class TriangleOfChars {
     public static void main(String[] args) {
-        StringBuilder triangleOfNums = isLess('0', '9', true);
+        StringBuilder triangleOfNums = create('0', '9', true);
         if (triangleOfNums != null) System.out.print(triangleOfNums);
 
-        StringBuilder triangleOfSigns = isLess('/', '!', false);
+        StringBuilder triangleOfSigns = create('/', '!', false);
         if (triangleOfSigns != null) System.out.print(triangleOfSigns);
 
-        StringBuilder triangleOfLetters = isLess('A', 'J', false);
+        StringBuilder triangleOfLetters = create('A', 'J', false);
         if (triangleOfLetters != null) System.out.print(triangleOfLetters);
     }
 
-    private static StringBuilder isLess(int start, int end, boolean asc) {
-        if (start > end) {
-            System.out.printf("%nОшибка: левая граница (%d) > правой (%d)%n%n", start, end);
-            return null;
-        }
-        return create(start, end, asc);
-    }
-
     private static StringBuilder create(int start, int end, boolean asc) {
+        if (isGreater(start, end)) return null;
         int len = end - start + 1;
         char[] chars = new char[len];
         for (int i = 0; i < len; i++) {
@@ -35,5 +28,13 @@ public class TriangleOfChars {
             charAmount += 2;
         }
         return triangle;
+    }
+
+    private static boolean isGreater(int start, int end) {
+        if (start > end) {
+            System.out.printf("%nОшибка: левая граница (%d) > правой (%d)%n%n", start, end);
+            return true;
+        }
+        return false;
     }
 }
