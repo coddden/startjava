@@ -5,14 +5,14 @@ import java.util.Random;
 
 public class UniqueNumsFiller {
     public static void main(String[] args) {
-        ascDisplay(fill(-30, -10, 23), 23);
-        ascDisplay(fill(10, 50, 10), 10);
-        ascDisplay(fill(-34, -34, 0), 0);
-        ascDisplay(fill(-1, 2, -3), -3);
-        ascDisplay(fill(5, -8, 2), 2);
+        display(fillAsc(-30, -10, 23), 23);
+        display(fillAsc(10, 50, 10), 10);
+        display(fillAsc(-34, -34, 0), 0);
+        display(fillAsc(-1, 2, -3), -3);
+        display(fillAsc(5, -8, 2), 2);
     }
 
-    private static int[] fill(int start, int end, int rowLen) {
+    private static int[] fillAsc(int start, int end, int rowLen) {
         int range = end - start + 1;
         int arrayLen = (int) (range * 0.75);
         if (hasError(start, end, rowLen, arrayLen)) return null;
@@ -26,6 +26,7 @@ public class UniqueNumsFiller {
                 index++;
             }
         }
+        Arrays.sort(uniqueNums);
         return uniqueNums;
     }
 
@@ -34,7 +35,7 @@ public class UniqueNumsFiller {
             System.out.printf("Ошибка: левая граница (%d) > правой (%d)%n%n", start, end);
             return true;
         }
-        if (arrayLen < 0) {
+        if (arrayLen <= 0) {
             System.out.printf("Ошибка: длина массива должна быть больше 0 (%d)%n%n", arrayLen);
             return true;
         }
@@ -54,10 +55,9 @@ public class UniqueNumsFiller {
         return false;
     }
 
-    private static void ascDisplay(int[] array, int rowLen) {
+    private static void display(int[] array, int rowLen) {
         if (array == null) return;
         System.out.println();
-        Arrays.sort(array);
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i]);
             System.out.print((i + 1) % rowLen == 0 ? "\n" : " ");
