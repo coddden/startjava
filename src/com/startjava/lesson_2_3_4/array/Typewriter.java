@@ -1,7 +1,5 @@
 package com.startjava.lesson_2_3_4.array;
 
-import java.util.Arrays;
-
 public class Typewriter {
     public static void main(String[] args) throws InterruptedException {
         type("Java - это C++, из которого убрали все пистолеты, " +
