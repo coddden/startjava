@@ -1,5 +1,8 @@
 package com.startjava.lesson_2_3_4.array;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class Typewriter {
     public static void main(String[] args) throws InterruptedException {
         type("Java - это C++, из которого убрали все пистолеты, " +
@@ -10,67 +13,47 @@ public class Typewriter {
         type("");
     }
 
-    private static void type(String row) throws InterruptedException {
-        if (isExist(row)) return;
-        String cleanRow = removeSigns(row);
-        String[] words = cleanRow.split("\\s+");
-        sort(words);
+    private static void type(String originalText) throws InterruptedException {
+        if (!isExist(originalText)) return;
+        String cleanText = originalText.replaceAll("[\\p{Punct}&&[^+]]", "");
+        String[] words = cleanText.split("\\s+");
+        Arrays.sort(words, Comparator.comparingInt(String::length));
+        addSpaces(words);
         System.out.println();
-        display(row, words);
+        display(findHighlight(originalText, words));
     }
 
-    private static boolean isExist(String row) {
-        if (row == null || row.isBlank()) {
-            System.out.printf("%nОшибка! Строка ");
-            System.out.printf(row == null ? "не существует%n" : "пуста%n");
-            return true;
-        }
+    private static boolean isExist(String originalText) {
+        if (originalText != null && !originalText.isBlank()) return true;
+        String msg = originalText == null ? "не существует." : "пуста.";
+        System.out.printf("%nОшибка! Строка %s%n", msg);
         return false;
     }
 
-    private static String removeSigns(String row) {
-        StringBuilder cleanRow = new StringBuilder();
-        for (int i = 0; i < row.length(); i++) {
-            if (row.charAt(i) == '.' || row.charAt(i) == ',' || row.charAt(i) == '?' ||
-                    row.charAt(i) == '!' || row.charAt(i) == ';' || row.charAt(i) == ':' ||
-                    row.charAt(i) == '-' || row.charAt(i) == '(' || row.charAt(i) == ')' ||
-                    row.charAt(i) == '\"' || row.charAt(i) == '\n') continue;
-            cleanRow.append(row.charAt(i));
-        }
-        return cleanRow + "";
+    private static void addSpaces(String[] words) {
+        words[0] = words[0].length() == 1 ? ' ' + words[0] + ' ' : words[0];
     }
 
-    private static void sort(String[] array) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (array[i].length() < array[j].length()) {
-                    String temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
-                }
-            }
-        }
-    }
-
-    private static void display(String row, String[] array) throws InterruptedException {
+    private static String findHighlight(String originalText, String[] array) {
         int len = array.length;
-        String shortWord = array[0];
-        String longWord = array[len - 1];
-        int start = row.indexOf(shortWord);
-        int end = row.indexOf(longWord);
-        if (start > end) {
-            int temp = start;
-            start = end;
-            end = temp;
-            end += shortWord.length();
+        int startHighlight = originalText.indexOf(array[0]);
+        int endHighlight = originalText.indexOf(array[len - 1]);
+        if (startHighlight > endHighlight) {
+            int temp = startHighlight;
+            startHighlight = endHighlight;
+            endHighlight = temp;
+            endHighlight += array[0].length();
         } else {
-            end += longWord.length();
+            endHighlight += array[len - 1].length();
         }
-        String resultRow = row.substring(0, start) +
-                row.substring(start, end).toUpperCase() +
-                row.substring(end);
-        for (int i = 0; i < resultRow.length(); i++) {
-            System.out.print(resultRow.charAt(i));
+        return originalText.substring(0, startHighlight) +
+                originalText.substring(startHighlight, endHighlight).toUpperCase() +
+                originalText.substring(endHighlight);
+    }
+
+    private static void display(String resultText) throws InterruptedException {
+        for (int i = 0; i < resultText.length(); i++) {
+            System.out.print(resultText.charAt(i));
             Thread.sleep(200);
         }
     }
