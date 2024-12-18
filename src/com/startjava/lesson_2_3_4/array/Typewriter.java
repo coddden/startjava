@@ -20,7 +20,7 @@ public class Typewriter {
         Arrays.sort(words, Comparator.comparingInt(String::length));
         addSpaces(words);
         System.out.println();
-        display(findHighlight(originalText, words));
+        display(findSelection(originalText, words));
     }
 
     private static boolean isExist(String originalText) {
@@ -34,26 +34,26 @@ public class Typewriter {
         words[0] = words[0].length() == 1 ? ' ' + words[0] + ' ' : words[0];
     }
 
-    private static String findHighlight(String originalText, String[] array) {
-        int len = array.length;
-        int startHighlight = originalText.indexOf(array[0]);
-        int endHighlight = originalText.indexOf(array[len - 1]);
-        if (startHighlight > endHighlight) {
-            int temp = startHighlight;
-            startHighlight = endHighlight;
-            endHighlight = temp;
-            endHighlight += array[0].length();
+    private static String findSelection(String originalText, String[] words) {
+        int len = words.length;
+        int start = originalText.indexOf(words[0]);
+        int end = originalText.indexOf(words[len - 1]);
+        if (start > end) {
+            int temp = start;
+            start = end;
+            end = temp;
+            end += words[0].length();
         } else {
-            endHighlight += array[len - 1].length();
+            end += words[len - 1].length();
         }
-        return originalText.substring(0, startHighlight) +
-                originalText.substring(startHighlight, endHighlight).toUpperCase() +
-                originalText.substring(endHighlight);
+        return originalText.substring(0, start) +
+                originalText.substring(start, end).toUpperCase() +
+                originalText.substring(end);
     }
 
     private static void display(String resultText) throws InterruptedException {
-        for (int i = 0; i < resultText.length(); i++) {
-            System.out.print(resultText.charAt(i));
+        for (char letter : resultText.toCharArray()) {
+            System.out.print(letter);
             Thread.sleep(200);
         }
     }
