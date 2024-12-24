@@ -1,6 +1,6 @@
 package com.startjava.lesson_2_3_4.array;
 
-import static com.startjava.lesson_2_3_4.array.Console.*;
+import static com.startjava.lesson_2_3_4.array.Console.displayMsg;
 
 import java.util.Comparator;
 import java.util.Random;
@@ -10,7 +10,8 @@ public class Arrays {
 
     public static long[] calcFactorial(long... nums) {
         if (nums == null || nums.length == 0) {
-            displayEmptyArrayMsg(nums);
+            String msg = nums == null ? "Массив не существует.\n" : "Массив пуст.\n";
+            displayMsg(msg);
             return nums;
         }
         int len = nums.length;
@@ -27,7 +28,7 @@ public class Arrays {
 
     public static StringBuilder createTriangle(int start, int end, boolean asc) {
         if (start > end) {
-            displayExceedRightBorderError(start, end);
+            displayMsg("Ошибка: левая граница (" + start + ") > правой (" + end + ")\n");
             return null;
         }
         int len = end - start + 1;
@@ -46,19 +47,19 @@ public class Arrays {
         return triangle;
     }
 
-    public static int[] fillAsc(int start, int end, int rowLen) {
+    public static int[] fillArrayAsc(int start, int end, int rowLen) {
         int range = end - start + 1;
         int arrayLen = (int) (range * 0.75);
         if (start > end) {
-            displayExceedRightBorderError(start, end);
+            displayMsg("Ошибка: левая граница (" + start + ") > правой (" + end + ")\n");
             return null;
         }
         if (arrayLen <= 0) {
-            displayExceedArrayLenError(arrayLen);
+            displayMsg("Ошибка: длина массива должна быть больше 0 (" + arrayLen + ")\n");
             return null;
         }
         if (rowLen < 1) {
-            displayAmountNumsInRowError(rowLen);
+            displayMsg("Ошибка: количество чисел в строке не может быть меньше 1 (" + rowLen + ")\n");
             return null;
         }
         int[] uniqueNums = new int[arrayLen];
@@ -82,44 +83,10 @@ public class Arrays {
         return uniqueNums;
     }
 
-    public static int removeExceedElements(int index, int srcArrayLength) {
-        if (index < 0 || index >= srcArrayLength) {
-            displayMissingIndexError(index, srcArrayLength);
-            return -1;
-        }
-        float[] srcArray = new float[srcArrayLength];
-        for (int i = 0; i < srcArray.length; i++) {
-            srcArray[i] = (float) Math.random();
-        }
-        displaySrcOrChangedArray("Исходный", srcArray);
-        int zeroedCells = 0;
-        for (int i = 0; i < srcArray.length; i++) {
-            if (srcArray[i] > srcArray[index]) {
-                srcArray[i] = 0;
-                zeroedCells++;
-            }
-        }
-        displaySrcOrChangedArray("Изменённый", srcArray);
-        return zeroedCells;
-    }
-
-    public static int[] reverseArray(int[] array) {
-        if (array == null || array.length == 0) {
-            return array;
-        }
-        int len = array.length;
-        int[] reversed = new int[len];
-        int index = 0;
-        for (int i = len - 1; i >= 0; i--) {
-            reversed[index++] = array[i];
-        }
-        return reversed;
-    }
-
-    public static String typeText(String originalText) throws InterruptedException {
+    public static String prepareTypeText(String originalText) throws InterruptedException {
         if (originalText == null || originalText.isBlank()) {
-            String msg = originalText == null ? "не существует." : "пуста.";
-            displayEmptyRowError(msg);
+            String msg = originalText == null ? "\nОшибка! Строка не существует." : "\nОшибка! Строка пуста.";
+            displayMsg(msg);
             return null;
         }
         String cleanText = originalText.replaceAll("[\\p{Punct}&&[^+]]", "");
@@ -141,5 +108,29 @@ public class Arrays {
         return originalText.substring(0, start) +
                 originalText.substring(start, end).toUpperCase() +
                 originalText.substring(end);
+    }
+
+    public static int removeExceedElements(int index, float[] array) {
+        int zeroedCells = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] > array[index]) {
+                array[i] = 0;
+                zeroedCells++;
+            }
+        }
+        return zeroedCells;
+    }
+
+    public static int[] reverseArray(int[] array) {
+        if (array == null || array.length == 0) {
+            return array;
+        }
+        int len = array.length;
+        int[] reversed = new int[len];
+        int index = 0;
+        for (int i = len - 1; i >= 0; i--) {
+            reversed[index++] = array[i];
+        }
+        return reversed;
     }
 }
