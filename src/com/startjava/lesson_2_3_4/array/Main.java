@@ -5,76 +5,94 @@ import static com.startjava.lesson_2_3_4.array.Console.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        displayMsg("\n1. Ревёрс значений массива.\n");
-        int[] emptyArray = {};
-        launchReverser(emptyArray);
-        int[] nonExistArray = null;
-        launchReverser(nonExistArray);
-        int[] nums1 = {6, 8, 9, 1};
-        launchReverser(nums1);
-        int[] nums2 = {13, 8, 5, 3, 2, 1, 1};
-        launchReverser(nums2);
+        launchReverse();
+        launchFactorialCalc();
+        launchExceedingElementsRemoval();
+        launchCharTriangleCreation();
+        launchUniqueNumsFilling();
+        launchTextPrinting();
+    }
 
-        displayMsg("2. Вычисление факториала.\n");
+    private static void launchReverse() {
+        displayMsg("\n1. Ревёрс значений массива.\n\n");
+        int[][] numArrays = {{}, null, {6, 8, 9, 1}, {13, 8, 5, 3, 2, 1, 1}};
+        for (int[] numArray : numArrays) {
+            if (numArray == null || numArray.length == 0) {
+                displayMsg(numArray == null ? "Массив не существует.\n\n" : "Массив пуст.\n\n");
+                continue;
+            }
+            displayMsg("   До ревёрса: " + java.util.Arrays.toString(numArray) + "\n");
+            displayMsg("После ревёрса: " + java.util.Arrays.toString(reverseArray(numArray)) + "\n\n");
+        }
+    }
+
+    private static void launchFactorialCalc() {
+        displayMsg("2. Вычисление факториала.\n\n");
         displayFactorialsExpr(calcFactorial());
         displayFactorialsExpr(calcFactorial(null));
         displayFactorialsExpr(calcFactorial(8, 0, 9), 8, 0, 9);
         displayFactorialsExpr(calcFactorial(-3, 1, 7, 13), -3, 1, 7, 13);
         displayFactorialsExpr(calcFactorial(-22, -0), -22, -0);
+    }
 
-        displayMsg("\n3. Удаление элементов массива, превышающих заданное значение.");
+    private static void launchExceedingElementsRemoval() {
+        displayMsg("\n3. Удаление элементов массива, превышающих заданное значение.\n");
         int[] indexes = {-1, 15, 0, 14};
         int srcArrayLength = 15;
         for (int index : indexes) {
             System.out.println();
-            if (index < 0 || index >= srcArrayLength) {
+            float[] srcArray = generateArray(index, srcArrayLength);
+            if (srcArray == null) {
                 displayMsg("Ошибка! Индекса " + index + " в массиве не существует!\n" +
-                        "Доступные индексы 0-" + (srcArrayLength - 1));
+                        "Доступные индексы 0-" + (srcArrayLength - 1) + "\n");
                 continue;
             }
-            float[] srcArray = new float[srcArrayLength];
-            for (int i = 0; i < srcArrayLength; i++) {
-                srcArray[i] = (float) Math.random();
-            }
-            displayZeroedArray("Исходный", srcArray);
+            displayArrayBySevenNums("Исходный массив.\n", srcArray);
             int zeroedCells = removeExceedElements(index, srcArray);
-            displayZeroedArray("\n\nИзменённый", srcArray);
-            displayMsg("\nИндекс " + index + " | Обнулённых ячеек " + zeroedCells);
+            displayArrayBySevenNums("\n\nИзменённый массив.\n", srcArray);
+            displayMsg("\nИндекс " + index + " | Обнулённых ячеек " + zeroedCells + "\n");
         }
-
-        displayMsg("\n4. Вывод отсортированных символов в виде треугольника.\n");
-        launchTriangle(createTriangle('0', '9', true));
-        launchTriangle(createTriangle('/', '!', false));
-        launchTriangle(createTriangle('A', 'J', false));
-
-        displayMsg("5.Заполнение массива уникальными числами.");
-        displayUniqueNums(fillArrayAsc(-30, -10, 23), 23);
-        displayUniqueNums(fillArrayAsc(10, 50, 10), 10);
-        displayUniqueNums(fillArrayAsc(-34, -34, 0), 0);
-        displayUniqueNums(fillArrayAsc(-1, 2, -3), -3);
-        displayUniqueNums(fillArrayAsc(5, -8, 2), 2);
-
-        displayMsg("6.Вывод текста с эффектом пишущей машинки.");
-        launchTypewriter("Java - это C++, из которого убрали все пистолеты, " +
-                "ножи и дубинки.\n- James Gosling\n");
-        launchTypewriter("Чтобы написать чистый код, мы сначала пишем грязный код, " +
-                "затем рефакторим его.\n- Robert Martin\n");
-        launchTypewriter(null);
-        launchTypewriter("");
     }
 
-    private static void launchReverser(int[] array) {
-        displayReversedArray("До", array);
-        displayReversedArray("После", reverseArray(array));
-        System.out.println();
+    private static void launchCharTriangleCreation() {
+        displayMsg("\n4. Вывод отсортированных символов в виде треугольника.\n\n");
+        StringBuilder[] charTriangles = new StringBuilder[3];
+        charTriangles[0] = createCharTriangle('0', '9', true);
+        charTriangles[1] = createCharTriangle('/', '!', false);
+        charTriangles[2] = createCharTriangle('A', 'J', false);
+        for (StringBuilder charTriangle : charTriangles) {
+            displayMsg(charTriangle.toString());
+        }
     }
 
-    private static void launchTriangle(StringBuilder triangleOfChars) {
-        if (triangleOfChars != null) displayMsg(triangleOfChars.toString());
+    private static void launchUniqueNumsFilling() {
+        displayMsg("\n5.Заполнение массива уникальными числами.\n");
+        displayArrayByLines(fillArrayAsc(-30, -10, 23), 23);
+        displayArrayByLines(fillArrayAsc(10, 50, 10), 10);
+        displayArrayByLines(fillArrayAsc(-34, -34, 0), 0);
+        displayArrayByLines(fillArrayAsc(-1, 2, -3), -3);
+        displayArrayByLines(fillArrayAsc(5, -8, 2), 2);
     }
 
-    private static void launchTypewriter(String originalText) throws InterruptedException {
-        String resultText = prepareTypeText(originalText);
-        if (resultText != null) typeText(resultText);
+    private static void launchTextPrinting() throws InterruptedException {
+        displayMsg("6.Вывод текста с эффектом пишущей машинки.\n");
+        String[] originalTexts = {
+                "Java - это C++, из которого убрали все пистолеты, " +
+                        "ножи и дубинки.\n- James Gosling\n",
+                "Чтобы написать чистый код, мы сначала пишем грязный код, " +
+                        "затем рефакторим его.\n- Robert Martin\n",
+                null,
+                ""
+        };
+        for (String originalText : originalTexts) {
+            String resultText = makeTextFragmentInCaps(originalText);
+            if (resultText == null) {
+                displayMsg(originalText == null ?
+                        "\nОшибка! Строка не существует.\n" : "\nОшибка! Строка пуста.\n");
+                continue;
+            }
+            System.out.println();
+            typeText(resultText);
+        }
     }
 }

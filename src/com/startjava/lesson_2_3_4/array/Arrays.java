@@ -9,11 +9,7 @@ public class Arrays {
     private Arrays() {}
 
     public static long[] calcFactorial(long... nums) {
-        if (nums == null || nums.length == 0) {
-            String msg = nums == null ? "Массив не существует.\n" : "Массив пуст.\n";
-            displayMsg(msg);
-            return nums;
-        }
+        if (nums == null || nums.length == 0) return nums;
         int len = nums.length;
         long[] factorials = new long[len];
         for (int i = 0; i < len; i++) {
@@ -26,10 +22,13 @@ public class Arrays {
         return factorials;
     }
 
-    public static StringBuilder createTriangle(int start, int end, boolean asc) {
+    public static StringBuilder createCharTriangle(int start, int end, boolean asc) {
         if (start > end) {
-            displayMsg("Ошибка: левая граница (" + start + ") > правой (" + end + ")\n");
-            return null;
+            StringBuilder msg = new StringBuilder();
+            return msg.append("\nОшибка: левая граница (")
+                    .append(start)
+                    .append(") > правой (")
+                    .append(end).append(")\n\n");
         }
         int len = end - start + 1;
         char[] chars = new char[len];
@@ -51,15 +50,15 @@ public class Arrays {
         int range = end - start + 1;
         int arrayLen = (int) (range * 0.75);
         if (start > end) {
-            displayMsg("Ошибка: левая граница (" + start + ") > правой (" + end + ")\n");
+            displayMsg("Ошибка: левая граница (" + start + ") > правой (" + end + ")\n\n");
             return null;
         }
         if (arrayLen <= 0) {
-            displayMsg("Ошибка: длина массива должна быть больше 0 (" + arrayLen + ")\n");
+            displayMsg("Ошибка: длина массива должна быть больше 0 (" + arrayLen + ")\n\n");
             return null;
         }
         if (rowLen < 1) {
-            displayMsg("Ошибка: количество чисел в строке не может быть меньше 1 (" + rowLen + ")\n");
+            displayMsg("Ошибка: количество чисел в строке не может быть меньше 1 (" + rowLen + ")\n\n");
             return null;
         }
         int[] uniqueNums = new int[arrayLen];
@@ -83,17 +82,21 @@ public class Arrays {
         return uniqueNums;
     }
 
-    public static String prepareTypeText(String originalText) throws InterruptedException {
-        if (originalText == null || originalText.isBlank()) {
-            String msg = originalText == null ? "\nОшибка! Строка не существует." : "\nОшибка! Строка пуста.";
-            displayMsg(msg);
-            return null;
+    public static float[] generateArray(int index, int srcArrayLength) {
+        if (index < 0 || index >= srcArrayLength) return null;
+        float[] srcArray = new float[srcArrayLength];
+        for (int i = 0; i < srcArray.length; i++) {
+            srcArray[i] = (float) Math.random();
         }
+        return srcArray;
+    }
+
+    public static String makeTextFragmentInCaps(String originalText) {
+        if (originalText == null || originalText.isBlank()) return null;
         String cleanText = originalText.replaceAll("[\\p{Punct}&&[^+]]", "");
         String[] words = cleanText.split("\\s+");
         java.util.Arrays.sort(words, Comparator.comparingInt(String::length));
         words[0] = words[0].length() == 1 ? ' ' + words[0] + ' ' : words[0];
-        System.out.println();
         int len = words.length;
         int start = originalText.indexOf(words[0]);
         int end = originalText.indexOf(words[len - 1]);
@@ -122,9 +125,6 @@ public class Arrays {
     }
 
     public static int[] reverseArray(int[] array) {
-        if (array == null || array.length == 0) {
-            return array;
-        }
         int len = array.length;
         int[] reversed = new int[len];
         int index = 0;
