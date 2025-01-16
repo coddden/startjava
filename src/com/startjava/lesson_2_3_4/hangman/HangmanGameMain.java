@@ -53,11 +53,11 @@ public class HangmanGameMain {
                 isGuesed = true;
             }
         }
-        System.out.println("Хотите продолжить?asdfasdfsadf");
+        System.out.println("Хотите продолжить?");
     }
 
     private static String chooseRandomWord() {
-        String[] randomWords = {"цикл", "класс", "объект", "метод", "переменная"};
+        String[] randomWords = {"цикл", "класс", "объект", "метод", "переменная", "инкапсуляция"};
         Random random = new Random();
         int randomNum = random.nextInt(0, randomWords.length);
         return randomWords[randomNum];
