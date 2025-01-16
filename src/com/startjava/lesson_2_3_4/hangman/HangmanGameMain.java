@@ -53,7 +53,7 @@ public class HangmanGameMain {
                 isGuesed = true;
             }
         }
-        System.out.println("Хотите продолжить? ghjasdf");
+        System.out.println("Хотите продолжить?");
     }
 
     private static String chooseRandomWord() {
