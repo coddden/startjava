@@ -14,15 +14,15 @@ public class Main {
     }
 
     private static void launchReverse() {
-        displayMsg("\n1. Ревёрс значений массива.\n\n");
+        displayMsg("\n1. Реверс значений массива.\n\n");
         int[][] numArrays = {{}, null, {6, 8, 9, 1}, {13, 8, 5, 3, 2, 1, 1}};
         for (int[] numArray : numArrays) {
             if (numArray == null || numArray.length == 0) {
                 displayMsg(numArray == null ? "Массив не существует.\n\n" : "Массив пуст.\n\n");
                 continue;
             }
-            displayMsg("   До ревёрса: " + java.util.Arrays.toString(numArray) + "\n");
-            displayMsg("После ревёрса: " + java.util.Arrays.toString(reverse(numArray)) + "\n\n");
+            displayMsg("   До реверса: " + java.util.Arrays.toString(numArray) + "\n");
+            displayMsg("После реверса: " + java.util.Arrays.toString(reverse(numArray)) + "\n\n");
         }
     }
 
