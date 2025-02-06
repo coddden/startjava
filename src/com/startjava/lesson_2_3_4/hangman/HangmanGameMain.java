@@ -8,22 +8,19 @@ public class HangmanGameMain {
         Random random = new Random();
         Scanner scan = new Scanner(System.in);
         HangmanGame game = new HangmanGame(random);
-        String msg = "yes";
-        while (msg.equals("yes")) {
-            game.displayMenu();
-            char letter = Character.toUpperCase(scan.next().charAt(0));
-            if (!game.isCorrectLetter(letter)) continue;
-            game.play(letter);
-            if (!game.isFinish()) continue;
-            String finalMsg = "Хотите продолжить игру? [yes / no]: ";
+
+        String response = "yes";
+        while (response.equals("yes")) {
+            if (!game.isPlaying(scan)) continue;
+            String finalMsg = "\nХотите продолжить игру? [yes / no]: ";
             do {
-                System.out.printf("%n%s", finalMsg);
-                msg = scan.next().toLowerCase();
-                if (msg.equals("yes")) game.initialize(random);
-                if (!(msg.equals("no") || msg.equals("yes"))) {
-                    finalMsg = "Введите корректный ответ [yes / no]: ";
+                System.out.print(finalMsg);
+                response = scan.next().toLowerCase();
+                if (response.equals("yes")) game = new HangmanGame(random);
+                if (!response.equals("no") && !response.equals("yes")) {
+                    finalMsg = "\nВведите корректный ответ [yes / no]: ";
                 }
-            } while (!(msg.equals("no") || msg.equals("yes")));
+            } while (!response.equals("no") && !response.equals("yes"));
         }
     }
 }
