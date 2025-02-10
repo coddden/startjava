@@ -15,15 +15,48 @@ public class HangmanGame {
             "| GAME OVER!"
     };
     private static final String[] WORDS = {"КЛАСС", "ОБЪЕКТ", "ЦИКЛ", "ДАННЫЕ", "МЕТОД"};
-    private final char[] secretLetters;
-    private final char[] hiddenLetters;
-    private char[] wrongLetters = {};
-    private int guessedLettersCount = 0;
-    private int attempts = 0;
+    private char[] secretLetters;
+    private char[] hiddenLetters;
+    private char[] wrongLetters;
+    private int guessedLettersCount;
+    private int attempts;
 
-    public HangmanGame(Random random) {
-        this.secretLetters = chooseSecretWord(random);
-        this.hiddenLetters = createMask(secretLetters.length);
+    public void setSecretLetters(Random random) {
+        secretLetters = chooseSecretWord(random);
+    }
+
+    public void setHiddenLetters() {
+        hiddenLetters = createMask(secretLetters.length);
+    }
+
+    public void setWrongLetters() {
+        wrongLetters = new char[0];
+    }
+
+    public void setGuessedLettersCount() {
+        guessedLettersCount = 0;
+    }
+
+    public void setAttempts() {
+        attempts = 0;
+    }
+
+    public void play(Scanner scan) {
+        char letter;
+        while (guessedLettersCount != secretLetters.length && attempts != HANGMAN.length) {
+            do {
+                displayText(createMenu());
+                letter = Character.toUpperCase(scan.next().charAt(0));
+            } while (isWrongLetter(letter));
+            if (hasSameLetter(letter, secretLetters)) {
+                uncoverSecretLetter(letter);
+            } else {
+                hang(letter);
+            }
+        }
+        displayText(guessedLettersCount == secretLetters.length ?
+                "\nВы угадали слово - " : "\nВы проиграли!\nСекретное слово - ");
+        displayText(makeStr(secretLetters) + "\n");
     }
 
     private char[] chooseSecretWord(Random random) {
@@ -35,18 +68,6 @@ public class HangmanGame {
         char[] array = new char[len];
         Arrays.fill(array, '*');
         return array;
-    }
-
-    public boolean isPlaying(Scanner scan) {
-        displayText(createMenu());
-        char letter = Character.toUpperCase(scan.next().charAt(0));
-        if (!isCorrectLetter(letter)) return false;
-        if (hasSameLetter(letter, secretLetters)) {
-            uncoverSecretLetter(letter);
-        } else {
-            hang(letter);
-        }
-        return isFinished();
     }
 
     private void displayText(String text) {
@@ -64,16 +85,16 @@ public class HangmanGame {
         return Arrays.toString(array).replaceAll("[\\[\\],]", "");
     }
 
-    private boolean isCorrectLetter(char letter) {
+    private boolean isWrongLetter(char letter) {
         if (letter < 'А' || letter > 'Я') {
             displayText("Введите русскую букву!\n");
-            return false;
+            return true;
         }
         if (hasSameLetter(letter, hiddenLetters) || hasSameLetter(letter, wrongLetters)) {
             displayText("Такая буква уже была!\n");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private boolean hasSameLetter(char letter, char[] array) {
@@ -101,13 +122,5 @@ public class HangmanGame {
             displayText("\n" + HANGMAN[i]);
         }
         displayText("\n");
-    }
-
-    private boolean isFinished() {
-        if (!(guessedLettersCount == secretLetters.length || attempts == HANGMAN.length)) return false;
-        displayText(guessedLettersCount == secretLetters.length ?
-                "\nВы угадали слово - " : "\nВы проиграли!\nСекретное слово - ");
-        displayText(makeStr(secretLetters) + "\n");
-        return true;
     }
 }

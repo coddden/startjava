@@ -5,18 +5,22 @@ import java.util.Scanner;
 
 public class HangmanGameMain {
     public static void main(String[] args) {
-        Random random = new Random();
         Scanner scan = new Scanner(System.in);
-        HangmanGame game = new HangmanGame(random);
+        Random random = new Random();
+        HangmanGame game = new HangmanGame();
 
         String response = "yes";
         while (response.equals("yes")) {
-            if (!game.isPlaying(scan)) continue;
+            game.setSecretLetters(random);
+            game.setHiddenLetters();
+            game.setWrongLetters();
+            game.setGuessedLettersCount();
+            game.setAttempts();
+            game.play(scan);
             String finalMsg = "\nХотите продолжить игру? [yes / no]: ";
             do {
                 System.out.print(finalMsg);
                 response = scan.next().toLowerCase();
-                if (response.equals("yes")) game = new HangmanGame(random);
                 if (!response.equals("no") && !response.equals("yes")) {
                     finalMsg = "\nВведите корректный ответ [yes / no]: ";
                 }
