@@ -21,27 +21,14 @@ public class HangmanGame {
     private int guessedLettersCount;
     private int attempts;
 
-    public void setSecretLetters(Random random) {
-        secretLetters = chooseSecretWord(random);
-    }
-
-    public void setHiddenLetters() {
-        hiddenLetters = createMask(secretLetters.length);
-    }
-
-    public void setWrongLetters() {
-        wrongLetters = new char[0];
-    }
-
-    public void setGuessedLettersCount() {
-        guessedLettersCount = 0;
-    }
-
-    public void setAttempts() {
-        attempts = 0;
-    }
+    Random random = new Random();
 
     public void play(Scanner scan) {
+        secretLetters = chooseSecretWord(random);
+        hiddenLetters = createMask(secretLetters.length);
+        wrongLetters = new char[0];
+        guessedLettersCount = 0;
+        attempts = 0;
         char letter;
         while (guessedLettersCount != secretLetters.length && attempts != HANGMAN.length) {
             do {
