@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class HangmanGame {
 
-    private static final String[] HANGMAN = {
+    private static final String[] hangman = {
             "_______",
             "|     |",
             "|     @",
@@ -14,41 +14,40 @@ public class HangmanGame {
             "|    / \\",
             "| GAME OVER!"
     };
-    private static final String[] WORDS = {"КЛАСС", "ОБЪЕКТ", "ЦИКЛ", "ДАННЫЕ", "МЕТОД"};
-    private char[] secretLetters;
-    private char[] hiddenLetters;
+    private static final String[] words = {"КЛАСС", "ОБЪЕКТ", "ЦИКЛ", "ДАННЫЕ", "МЕТОД"};
+    private char[] secretWord;
+    private char[] mask;
     private char[] wrongLetters;
-    private int guessedLettersCount;
     private int attempts;
 
-    Random random = new Random();
-
     public void play(Scanner scan) {
-        secretLetters = chooseSecretWord(random);
-        hiddenLetters = createMask(secretLetters.length);
-        wrongLetters = new char[0];
-        guessedLettersCount = 0;
-        attempts = 0;
+        Random random = new Random();
+        secretWord = chooseSecretWord(random);
+        mask = createMask(secretWord.length);
+        wrongLetters = new char[33 - secretWord.length];
+        attempts = hangman.length;
+        int index = 0;
         char letter;
-        while (guessedLettersCount != secretLetters.length && attempts != HANGMAN.length) {
+        while (!Arrays.equals(mask, secretWord) && attempts > 0) {
             do {
-                displayText(createMenu());
+                displayText(createGameInfo());
                 letter = Character.toUpperCase(scan.next().charAt(0));
             } while (isWrongLetter(letter));
-            if (hasSameLetter(letter, secretLetters)) {
+            if (hasSameLetter(letter, secretWord)) {
                 uncoverSecretLetter(letter);
             } else {
-                hang(letter);
+                attempts--;
+                wrongLetters[index++] = letter;
+                hang();
             }
         }
-        displayText(guessedLettersCount == secretLetters.length ?
-                "\nВы угадали слово - " : "\nВы проиграли!\nСекретное слово - ");
-        displayText(makeStr(secretLetters) + "\n");
+        displayText(attempts == 0 ? "\nВы проиграли!\nСекретное слово - " : "\nВы угадали слово - ");
+        displayText(makeStr(secretWord) + "\n");
     }
 
     private char[] chooseSecretWord(Random random) {
-        int randomNum = random.nextInt(0, WORDS.length);
-        return WORDS[randomNum].toCharArray();
+        int randomNum = random.nextInt(words.length);
+        return words[randomNum].toCharArray();
     }
 
     private char[] createMask(int len) {
@@ -57,19 +56,11 @@ public class HangmanGame {
         return array;
     }
 
-    private void displayText(String text) {
-        System.out.print(text);
-    }
-
-    private String createMenu() {
-        return "\n" + makeStr(hiddenLetters) +
-                "\n" + "Попыток: " + (HANGMAN.length - attempts) +
+    private String createGameInfo() {
+        return "\n" + makeStr(mask) +
+                "\n" + "Попыток: " + attempts +
                 "\n" + "Ошибки: " + makeStr(wrongLetters) +
                 "\n" + "Ваша буква -> ";
-    }
-
-    private String makeStr(char[] array) {
-        return Arrays.toString(array).replaceAll("[\\[\\],]", "");
     }
 
     private boolean isWrongLetter(char letter) {
@@ -77,11 +68,22 @@ public class HangmanGame {
             displayText("Введите русскую букву!\n");
             return true;
         }
-        if (hasSameLetter(letter, hiddenLetters) || hasSameLetter(letter, wrongLetters)) {
+        if (hasSameLetter(letter, mask) || hasSameLetter(letter, wrongLetters)) {
             displayText("Такая буква уже была!\n");
             return true;
         }
         return false;
+    }
+
+    private void uncoverSecretLetter(char letter) {
+        for (int i = 0; i < secretWord.length; i++) {
+            if (letter == secretWord[i]) {
+                if (!hasSameLetter(letter, mask) && attempts < hangman.length) {
+                    attempts++;
+                }
+                mask[i] = letter;
+            }
+        }
     }
 
     private boolean hasSameLetter(char letter, char[] array) {
@@ -91,23 +93,18 @@ public class HangmanGame {
         return false;
     }
 
-    private void uncoverSecretLetter(char letter) {
-        for (int i = 0; i < secretLetters.length; i++) {
-            if (letter == secretLetters[i]) {
-                if (!hasSameLetter(letter, hiddenLetters) && attempts > 0) attempts--;
-                hiddenLetters[i] = letter;
-                guessedLettersCount++;
-            }
-        }
-    }
-
-    private void hang(char letter) {
-        attempts++;
-        wrongLetters = Arrays.copyOf(wrongLetters, wrongLetters.length + 1);
-        wrongLetters[wrongLetters.length - 1] = letter;
-        for (int i = 0; i < attempts; i++) {
-            displayText("\n" + HANGMAN[i]);
+    private void hang() {
+        for (int i = 0; i < hangman.length - attempts; i++) {
+            displayText("\n" + hangman[i]);
         }
         displayText("\n");
+    }
+
+    private void displayText(String text) {
+        System.out.print(text);
+    }
+
+    private String makeStr(char[] array) {
+        return Arrays.toString(array).replaceAll("[\\[\\],\\u0000]", "");
     }
 }
