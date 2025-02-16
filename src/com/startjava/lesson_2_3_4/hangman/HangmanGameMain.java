@@ -9,14 +9,13 @@ public class HangmanGameMain {
         String response = "yes";
         while (response.equals("yes")) {
             game.play(scan);
-            String finalMsg = "\nХотите продолжить игру? [yes / no]: ";
-            do {
-                System.out.print(finalMsg);
+            System.out.print("\nХотите продолжить игру? [yes / no]: ");
+            response = scan.next().toLowerCase();
+            if (!response.equals("yes") && !response.equals("no")) {
+                System.out.print("\nВведите корректный ответ [yes / no]: ");
                 response = scan.next().toLowerCase();
-                if (!response.equals("no") && !response.equals("yes")) {
-                    finalMsg = "\nВведите корректный ответ [yes / no]: ";
-                }
-            } while (!response.equals("no") && !response.equals("yes"));
+            }
+            if (response.equals("no")) break;
         }
     }
 }
