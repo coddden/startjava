@@ -1,25 +1,21 @@
 package com.startjava.lesson_2_3_4.calculator;
 
+import static java.lang.Double.NaN;
+
 public class Calculator {
 
-    private long firstNum;
-    private long secondNum;
-    private char mathSign;
+    private String[] expression;
 
-    public void setFirstNum(long firstNum) {
-        this.firstNum = firstNum;
+    public void setExpression(String expression) {
+        this.expression = expression.split(" ");
     }
+    
+    public double calculate() {
+        int firstNum = Integer.parseInt(expression[0]);
+        int secondNum = Integer.parseInt(expression[2]);
+        char mathSign = expression[1].charAt(0);
 
-    public void setSecondNum(long secondNum) {
-        this.secondNum = secondNum;
-    }
-
-    public void setMathSign(char mathSign) {
-        this.mathSign = mathSign;
-    }
-
-    public void calculate() {
-        double result = 0;
+        double result;
         switch (mathSign) {
             case '+':
                 result = firstNum + secondNum;
@@ -35,24 +31,20 @@ public class Calculator {
                     result = (double) firstNum / secondNum;
                 } else {
                     System.out.printf("%nОшибка: деление на ноль запрещено%n");
-                    return;
+                    return NaN;
                 }
                 break;
             case '%':
-                result = firstNum % secondNum;
+                result = Math.floorMod(firstNum, secondNum);
                 break;
             case '^':
-                result = 1;
-                for (int i = 0; i < Math.abs(secondNum); i++) {
-                    result *= firstNum;
-                }
-                result = secondNum < 0 ? 1 / result : result;
+                result = Math.pow(firstNum, secondNum);
                 break;
             default:
                 System.out.printf("%nОшибка: операция '%s' не поддерживается.%n", mathSign);
                 System.out.printf("Доступны следующие операции: +, -, *, /, ^ %n");
-                return;
+                return NaN;
         }
-        System.out.println("\nОтвет: " + result);
+        return result;
     }
 }
