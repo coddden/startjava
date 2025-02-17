@@ -1,50 +1,38 @@
 package com.startjava.lesson_2_3_4.calculator;
 
-import static java.lang.Double.NaN;
-
 public class Calculator {
-
-    private String[] expression;
-
-    public void setExpression(String expression) {
-        this.expression = expression.split(" ");
-    }
-    
-    public double calculate() {
-        int firstNum = Integer.parseInt(expression[0]);
-        int secondNum = Integer.parseInt(expression[2]);
-        char mathSign = expression[1].charAt(0);
-
-        double result;
+    public double calculate(String expression) {
+        String[] expressionParts = expression.split(" ");
+        int firstNum = Integer.parseInt(expressionParts[0]);
+        int secondNum = Integer.parseInt(expressionParts[2]);
+        char mathSign = expressionParts[1].charAt(0);
         switch (mathSign) {
             case '+':
-                result = firstNum + secondNum;
-                break;
+                return firstNum + secondNum;
             case '-':
-                result = firstNum - secondNum;
-                break;
+                return firstNum - secondNum;
             case '*':
-                result = firstNum * secondNum;
-                break;
+                return firstNum * secondNum;
             case '/':
-                if (secondNum != 0) {
-                    result = (double) firstNum / secondNum;
-                } else {
-                    System.out.printf("%nОшибка: деление на ноль запрещено%n");
-                    return NaN;
-                }
-                break;
+                if (isZero(secondNum)) return Double.NaN;
+                return (double) firstNum / secondNum;
             case '%':
-                result = Math.floorMod(firstNum, secondNum);
-                break;
+                if (isZero(secondNum)) return Double.NaN;
+                return Math.floorMod(firstNum, secondNum);
             case '^':
-                result = Math.pow(firstNum, secondNum);
-                break;
+                return Math.pow(firstNum, secondNum);
             default:
                 System.out.printf("%nОшибка: операция '%s' не поддерживается.%n", mathSign);
                 System.out.printf("Доступны следующие операции: +, -, *, /, ^ %n");
-                return NaN;
+                return Double.NaN;
         }
-        return result;
+    }
+
+    private boolean isZero(int num) {
+        if (num == 0) {
+            System.out.printf("%nОшибка: деление на ноль запрещено%n");
+            return true;
+        }
+        return false;
     }
 }

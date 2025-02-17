@@ -10,20 +10,22 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
 
         String response = "yes";
-        while (response.equals("yes")) {
+        while (!response.equals("no")) {
             System.out.print("\nВведите выражение из трех аргументов, например, 2 ^ 10: ");
             String expression = scan.nextLine();
-            calculator.setExpression(expression);
-            double result = calculator.calculate();
+            double result = calculator.calculate(expression);
             if (Double.isNaN(result)) continue;
-            System.out.printf("%s = %s", expression, df.format(result));
+            displayResult(expression, df, result);
             System.out.print("\nХотите продолжить вычисления? [yes / no]: ");
             response = scan.nextLine().toLowerCase();
             if (!response.equals("yes") && !response.equals("no")) {
                 System.out.print("\nВведите корректный ответ [yes / no]: ");
                 response = scan.nextLine().toLowerCase();
             }
-            if (response.equals("no")) break;
         }
+    }
+
+    private static void displayResult(String expression, DecimalFormat df, double result) {
+        System.out.printf("%s = %s", expression, df.format(result));
     }
 }
