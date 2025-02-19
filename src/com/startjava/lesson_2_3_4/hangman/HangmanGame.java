@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class HangmanGame {
 
-    private static final String[] hangman = {
+    private final String[] hangman = {
             "_______",
             "|     |",
             "|     @",
@@ -14,7 +14,8 @@ public class HangmanGame {
             "|    / \\",
             "| GAME OVER!"
     };
-    private static final String[] words = {"КЛАСС", "ОБЪЕКТ", "ЦИКЛ", "ДАННЫЕ", "МЕТОД"};
+    private final String[] words = {"КЛАСС", "ОБЪЕКТ", "ЦИКЛ", "ДАННЫЕ", "МЕТОД"};
+    private static final int ALPHABET_SIZE = 33;
     private char[] secretWord;
     private char[] mask;
     private char[] wrongLetters;
@@ -24,7 +25,7 @@ public class HangmanGame {
         Random random = new Random();
         secretWord = chooseSecretWord(random);
         mask = createMask(secretWord.length);
-        wrongLetters = new char[33 - secretWord.length];
+        wrongLetters = new char[ALPHABET_SIZE - secretWord.length];
         attempts = hangman.length;
         int index = 0;
         char letter;
@@ -105,6 +106,12 @@ public class HangmanGame {
     }
 
     private String makeStr(char[] array) {
-        return Arrays.toString(array).replaceAll("[\\[\\],\\u0000]", "");
+        StringBuilder resultStr = new StringBuilder();
+        for (char item : array) {
+            if (item != 0) {
+                resultStr.append(item).append(" ");
+            }
+        }
+        return resultStr.toString();
     }
 }
