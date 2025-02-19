@@ -14,11 +14,8 @@ public class Calculator {
             case '*':
                 return firstNum * secondNum;
             case '/':
-                if (isZero(secondNum)) return Double.NaN;
-                return (double) firstNum / secondNum;
             case '%':
-                if (isZero(secondNum)) return Double.NaN;
-                return Math.floorMod(firstNum, secondNum);
+                return division(firstNum, secondNum, mathSign);
             case '^':
                 return Math.pow(firstNum, secondNum);
             default:
@@ -28,11 +25,11 @@ public class Calculator {
         }
     }
 
-    private boolean isZero(int num) {
-        if (num == 0) {
+    private double division(int firstNum, int secondNum, char mathSign) {
+        if (secondNum == 0) {
             System.out.printf("%nОшибка: деление на ноль запрещено%n");
-            return true;
+            return Double.NaN;
         }
-        return false;
+        return mathSign == '/' ? (double) firstNum / secondNum : Math.floorMod(firstNum, secondNum);
     }
 }
