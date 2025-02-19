@@ -6,9 +6,9 @@ import java.util.Scanner;
 // Игра Камень-Ножницы-Бумага
 public class RpsGameFormatting {
 
-    private static final String ROCK = "R";
-    private static final String PAPER = "P";
-    private static final String SCISSORS = "S";
+    private static final String ROCK = "✊";
+    private static final String PAPER = "✋";
+    private static final String SCISSORS = "✌️";
 
     public static void main(String[] args) throws InterruptedException {
         Random r = new Random();
