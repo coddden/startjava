@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class CalculatorTest {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Calculator calculator = new Calculator();
         String response = "yes";
         while (!response.equals("no")) {
             if (!response.equals("yes")) {
@@ -14,15 +13,17 @@ public class CalculatorTest {
                 continue;
             }
             System.out.print("\nВведите выражение из трех аргументов, например, 2 ^ 10: ");
-            String expression = scan.nextLine();
-            double result = calculator.calculate(expression);
-            displayResult(expression, result);
+            String expr = scan.nextLine().replaceAll("\\s+", " ").trim();
+            try {
+                displayResult(expr, Calculator.calculate(expr));
+            } catch (ArithmeticException | IllegalStateException | IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
             response = proceed(scan, response);
         }
     }
 
     private static void displayResult(String expression, double result) {
-        if (Double.isNaN(result)) return;
         DecimalFormat df = new DecimalFormat("#.###");
         System.out.printf("%s = %s", expression, df.format(result));
     }
