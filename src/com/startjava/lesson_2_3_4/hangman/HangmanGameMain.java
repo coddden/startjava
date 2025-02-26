@@ -8,19 +8,11 @@ public class HangmanGameMain {
         HangmanGame game = new HangmanGame();
         String response = "yes";
         while (!response.equals("no")) {
-            if (!response.equals("yes")) {
-                response = proceed(scan, response);
-                continue;
-            }
-            game.play(scan);
-            response = proceed(scan, response);
+            if (response.equals("yes")) game.play(scan);
+            System.out.print(response.equals("yes") ?
+                    "\nХотите продолжить игру? [yes / no]: " :
+                    "\nВведите корректный ответ [yes / no]: ");
+            response = scan.next().toLowerCase();
         }
-    }
-
-    private static String proceed(Scanner scan, String response) {
-        System.out.print(response.equals("yes") ?
-                "\nХотите продолжить игру? [yes / no]: " :
-                "\nВведите корректный ответ [yes / no]: ");
-        return scan.next().toLowerCase();
     }
 }
