@@ -27,7 +27,7 @@ public class Calculator {
 
     private static void checkExpr(String[] array) {
         if (array.length != EXPR_SIZE) {
-            throw new IllegalArgumentException("\nОшибка: неверное количество аргументов.");
+            throw new ExpressionLengthException("\nОшибка: неверное количество аргументов.");
         }
         if (!array[0].matches("-?\\d+") || !array[2].matches("-?\\d+")) {
             throw new NumberFormatException("\nОшибка: вводимые числа должны быть целыми.");
