@@ -12,8 +12,8 @@ public class CalculatorTest {
                 String expr = inputExpr(scan);
                 try {
                     displayResult(expr, Calculator.calculate(expr));
-                } catch (ArithmeticException | IllegalStateException | IllegalArgumentException |
-                         ExpressionLengthException e) {
+                } catch (ArithmeticException | UnsupportedOperationException |
+                        IllegalArgumentException | ExpressionLengthException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -26,7 +26,7 @@ public class CalculatorTest {
 
     private static String inputExpr(Scanner scan) {
         System.out.print("\nВведите выражение из трех аргументов, например, 2 ^ 10: ");
-        return scan.nextLine().replaceAll("\\s+", " ").trim();
+        return scan.nextLine().trim().replaceAll("\\s+", " ");
     }
 
     private static void displayResult(String expression, double result) {
