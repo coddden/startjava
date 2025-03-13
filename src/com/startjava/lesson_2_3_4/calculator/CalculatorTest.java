@@ -4,11 +4,15 @@ import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class CalculatorTest {
+
+    private static final String POSITIVE = "yes";
+    private static final String NEGATIVE = "no";
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        String response = "yes";
-        while (!response.equals("no")) {
-            if (response.equals("yes")) {
+        String response = POSITIVE;
+        while (!response.equals(NEGATIVE)) {
+            if (response.equals(POSITIVE)) {
                 String expr = inputExpr(scan);
                 try {
                     displayResult(expr, Calculator.calculate(expr));
@@ -17,7 +21,7 @@ public class CalculatorTest {
                     System.out.println(e.getMessage());
                 }
             }
-            System.out.print(response.equals("yes") ?
+            System.out.print(response.equals(POSITIVE) ?
                     "\nХотите продолжить вычисления? [yes / no]: " :
                     "\nВведите корректный ответ [yes / no]: ");
             response = scan.nextLine().toLowerCase();
