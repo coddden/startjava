@@ -11,8 +11,14 @@ public class Calculator {
         if (exprParts.length != EXPR_SIZE) {
             throw new ExpressionLengthException("\nОшибка: неверное количество аргументов.");
         }
-        int firstNum = Integer.parseInt(exprParts[0]);
-        int secondNum = Integer.parseInt(exprParts[2]);
+        int firstNum;
+        int secondNum;
+        try {
+            firstNum = Integer.parseInt(exprParts[0]);
+            secondNum = Integer.parseInt(exprParts[2]);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("\nОшибка: вводимые числа должны быть целыми!");
+        }
         String mathSign = exprParts[1];
 
         return switch (mathSign) {
