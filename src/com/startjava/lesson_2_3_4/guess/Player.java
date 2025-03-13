@@ -4,55 +4,50 @@ import java.util.Arrays;
 
 public class Player {
 
+    private static final int ATTEMPTS = 10;
+    private final int[] numbers = new int[ATTEMPTS];
     private final String name;
-    private int attempts;
-    private int currentAttempt;
-    private int[] numbers;
+    private int currAttempt;
 
     public Player(String name) {
         this.name = name;
-        this.attempts = 10;
-        this.numbers = new int[attempts];
+    }
+
+    public int getAttempts() {
+        return ATTEMPTS;
+    }
+
+    public int[] getNumbers() {
+        return Arrays.copyOf(numbers, currAttempt);
+    }
+
+    public int getNumber() {
+        return numbers[currAttempt - 1];
     }
 
     public String getName() {
         return name;
     }
 
-    public int getAttempts() {
-        return attempts;
+    public int getCurrAttempt() {
+        return currAttempt + 1;
     }
 
-    public void setAttempts() {
-        this.attempts = 10;
+    public void setCurrAttempt() {
+        this.currAttempt = 0;
     }
 
-    public int getCurrentAttempt() {
-        return currentAttempt + 1;
-    }
-
-    public void setCurrentAttempt() {
-        this.currentAttempt = 0;
-    }
-
-    public int[] getNumbers() {
-        return Arrays.copyOf(numbers, currentAttempt);
-    }
-
-    public void setNumbers() {
-        Arrays.fill(numbers, 0);
-    }
-
-    public int getNumber() {
-        return numbers[currentAttempt - 1];
-    }
-
-    public void setNumber(int number) {
-        if (number < GuessNumber.START || number > GuessNumber.END) {
-            throw new IllegalArgumentException("Число должно входить в отрезок [1, 100]." +
-                    "\nПопробуйте еще раз: ");
+    public void addNumber(int number) {
+        if (number < GuessNumber.getStart() || number > GuessNumber.getEnd()) {
+            throw new IllegalArgumentException("""
+                    
+                    Число должно входить в отрезок [1, 100].
+                    Попробуйте еще раз:\s""");
         }
-        this.numbers[currentAttempt++] = number;
-        attempts--;
+        numbers[currAttempt++] = number;
+    }
+
+    public void clear() {
+        Arrays.fill(numbers, 0, currAttempt, 0);
     }
 }

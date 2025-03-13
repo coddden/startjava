@@ -6,39 +6,47 @@ import java.util.Scanner;
 
 public class GuessNumber {
 
-    private final Player[] players = new Player[2];
-    public static final int START = 1;
-    public static final int END = 100;
+    private static final int START = 1;
+    private static final int END = 100;
+    private static final int PLAYER_COUNT = 2;
+    private final Player[] players = new Player[PLAYER_COUNT];
     private int secretNumber;
 
     public GuessNumber(Player player1, Player player2) {
-        this.players[0] = player1;
-        this.players[1] = player2;
+        players[0] = player1;
+        players[1] = player2;
+    }
+
+    public static int getStart() {
+        return START;
+    }
+
+    public static int getEnd() {
+        return END;
     }
 
     public void play(Scanner scan) {
         for (Player player : players) {
-            player.setAttempts();
-            player.setCurrentAttempt();
-            player.setNumbers();
+            player.setCurrAttempt();
+            player.clear();
         }
-        Player currentPlayer = players[1];
+        Player currPlayer = players[1];
         System.out.printf("%nИгра началась! У каждого игрока по %d попыток%n",
-                currentPlayer.getAttempts());
+                currPlayer.getAttempts());
         generateSecretNumber();
         do {
-            currentPlayer = changeCurrentPlayer(currentPlayer);
+            currPlayer = changeCurrPlayer(currPlayer);
+            System.out.printf("%nПопытка № %d%nЧисло вводит %s: ",
+                    currPlayer.getCurrAttempt(), currPlayer.getName());
             while (true) {
-                System.out.printf("%nПопытка № %d%nЧисло вводит %s: ",
-                        currentPlayer.getCurrentAttempt(), currentPlayer.getName());
                 try {
-                    currentPlayer.setNumber(scan.nextInt());
+                    currPlayer.addNumber(scan.nextInt());
                     break;
                 } catch (IllegalArgumentException e) {
-                    System.out.println("\n" + e.getMessage());
+                    System.out.print(e.getMessage());
                 }
             }
-        } while (!isFinished(currentPlayer));
+        } while (!isGuessed(currPlayer) && hasAttempts(currPlayer));
         displayPlayersNumbers();
     }
 
@@ -47,27 +55,28 @@ public class GuessNumber {
         secretNumber = random.nextInt(START, END + 1);
     }
 
-    private Player changeCurrentPlayer(Player currentPlayer) {
-        return currentPlayer == players[1] ? players[0] : players[1];
+    private Player changeCurrPlayer(Player currPlayer) {
+        return currPlayer == players[1] ? players[0] : players[1];
     }
     
-    private boolean isFinished(Player currentPlayer) {
-        int playerNumber = currentPlayer.getNumber();
-        if (players[0].getAttempts() == 0 && players[1].getAttempts() == 0) {
-            System.out.println("\nУ всех игроков закончились попытки!\nИгра окончена!");
-            return true;
-        }
+    private boolean isGuessed(Player currPlayer) {
+        int playerNumber = currPlayer.getNumber();
         if (playerNumber == secretNumber) {
             System.out.printf("%n%s угадал число %d с %d-й попытки%n",
-                    currentPlayer.getName(), secretNumber, currentPlayer.getCurrentAttempt() - 1);
+                    currPlayer.getName(), secretNumber, currPlayer.getCurrAttempt() - 1);
             return true;
         }
         String msg = playerNumber > secretNumber ? "больше" : "меньше";
         System.out.printf("%n%d %s того, что загадал компьютер%n", playerNumber, msg);
-        if (currentPlayer.getAttempts() == 0) {
-            System.out.printf("У %s закончились попытки!%n", currentPlayer.getName());
-        }
         return false;
+    }
+
+    private boolean hasAttempts(Player currPlayer) {
+        if (currPlayer.getCurrAttempt() - 1 == currPlayer.getAttempts()) {
+            System.out.printf("У %s закончились попытки!%n", currPlayer.getName());
+        }
+        return players[0].getCurrAttempt() - 1 != players[0].getAttempts() ||
+                players[1].getCurrAttempt() - 1 != players[1].getAttempts();
     }
 
     private void displayPlayersNumbers() {
