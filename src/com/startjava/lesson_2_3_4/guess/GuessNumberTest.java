@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class GuessNumberTest {
 
-    private static final String POSITIVE = "yes";
-    private static final String NEGATIVE = "no";
+    private static final String YES = "yes";
+    private static final String NO = "no";
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -16,10 +16,10 @@ public class GuessNumberTest {
         Player player2 = new Player(scan.next());
         GuessNumber game = new GuessNumber(player1, player2);
 
-        String response = POSITIVE;
-        while (!response.equals(NEGATIVE)) {
-            if (response.equals(POSITIVE)) game.play(scan);
-            System.out.print(response.equals(POSITIVE) ?
+        String response = YES;
+        while (!response.equals(NO)) {
+            if (response.equals(YES)) game.play(scan);
+            System.out.print(response.equals(YES) ?
                     "\n\nХотите продолжить игру? [yes / no]: " :
                     "\nВведите корректный ответ [yes / no]: ");
             response = scan.next().toLowerCase();
