@@ -8,6 +8,7 @@ public class Player {
     private final int[] numbers = new int[ATTEMPTS];
     private final String name;
     private int currAttempt;
+    private int points;
 
     public Player(String name) {
         this.name = name;
@@ -29,6 +30,10 @@ public class Player {
         return currAttempt;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
     public void addNumber(int number) {
         if (number < GuessNumber.START || number > GuessNumber.END) {
             throw new IllegalArgumentException("\nЧисло должно входить в отрезок " +
@@ -36,6 +41,14 @@ public class Player {
                     "Попробуйте еще раз: ");
         }
         numbers[currAttempt++] = number;
+    }
+
+    public void addPoints() {
+        points++;
+    }
+
+    public void clearPoints() {
+        points = 0;
     }
 
     public void clear() {

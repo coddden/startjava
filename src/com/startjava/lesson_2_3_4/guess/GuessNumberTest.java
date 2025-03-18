@@ -9,12 +9,13 @@ public class GuessNumberTest {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-
         System.out.print("\nВведите имя первого игрока: ");
         Player player1 = new Player(scan.next());
         System.out.print("Введите имя второго игрока: ");
         Player player2 = new Player(scan.next());
-        GuessNumber game = new GuessNumber(player1, player2);
+        System.out.print("Введите имя третьего игрока: ");
+        Player player3 = new Player(scan.next());
+        GuessNumber game = new GuessNumber(player1, player2, player3);
 
         String response = YES;
         while (!response.equals(NO)) {
