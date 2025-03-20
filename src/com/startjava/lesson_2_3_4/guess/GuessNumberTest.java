@@ -4,24 +4,25 @@ import java.util.Scanner;
 
 public class GuessNumberTest {
 
+    private static final int PLAYER_COUNT = 3;
     private static final String YES = "yes";
     private static final String NO = "no";
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        System.out.print("\nВведите имя первого игрока: ");
-        Player player1 = new Player(scan.next());
-        System.out.print("Введите имя второго игрока: ");
-        Player player2 = new Player(scan.next());
-        System.out.print("Введите имя третьего игрока: ");
-        Player player3 = new Player(scan.next());
-        GuessNumber game = new GuessNumber(player1, player2, player3);
+        Player[] players = new Player[PLAYER_COUNT];
+
+        for (int i = 0; i < PLAYER_COUNT; i++) {
+            System.out.printf("Введите имя %d-го игрока: ", i + 1);
+            players[i] = new Player(scan.next());
+        }
+        GuessNumber game = new GuessNumber(players);
 
         String response = YES;
         while (!response.equals(NO)) {
             if (response.equals(YES)) game.play(scan);
             System.out.print(response.equals(YES) ?
-                    "\n\nХотите продолжить игру? [yes / no]: " :
+                    "\nХотите продолжить игру? [yes / no]: " :
                     "\nВведите корректный ответ [yes / no]: ");
             response = scan.next().toLowerCase();
         }

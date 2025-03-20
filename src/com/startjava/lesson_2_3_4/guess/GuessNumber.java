@@ -9,27 +9,24 @@ public class GuessNumber {
     public static final int START = 1;
     public static final int END = 100;
     private static final int ROUND_COUNT = 3;
-    private static final int PLAYER_COUNT = 3;
-    private static final Player[] PLAYERS = new Player[PLAYER_COUNT];
+    private final Player[] players;
     private int secretNumber;
 
-    public GuessNumber(Player player1, Player player2, Player player3) {
-        PLAYERS[0] = player1;
-        PLAYERS[1] = player2;
-        PLAYERS[2] = player3;
+    public GuessNumber(Player[] players) {
+        this.players = players;
     }
 
     public void play(Scanner scan) {
-        System.out.printf("%nИгра началась!%n" +
-                        "У каждого игрока по %d попыток в каждом раунде.%n" +
-                        "Всего %d раунда.%n", Player.ATTEMPTS, ROUND_COUNT);
-        shuffle();
+        System.out.printf("%nИгра началась!%nУ каждого игрока по %d попыток в каждом раунде." +
+                "%nВсего %d раунда.%n", Player.ATTEMPTS, ROUND_COUNT);
+        Random random = new Random();
+        shuffle(random);
         clearPoints();
         for (int i = 1; i <= ROUND_COUNT; i++) {
             System.out.printf("%nРаунд № %d%n", i);
             clear();
-            generateSecretNumber();
-            Player currPlayer = PLAYERS[2];
+            generateSecretNumber(random);
+            Player currPlayer = players[players.length - 1];
             do {
                 currPlayer = changeCurrPlayer(currPlayer);
                 System.out.printf("%nПопытка № %d%nЧисло вводит %s: ",
@@ -48,41 +45,38 @@ public class GuessNumber {
         displayWinner();
     }
 
-    private static void shuffle() {
-        Random random = new Random();
-        Player[] playersCopy = Arrays.copyOf(PLAYERS, PLAYERS.length);
-        int randomNum;
-        int index = 0;
-
-        for (int i = PLAYERS.length; i > 0; i--) {
-            randomNum = random.nextInt(i);
-            PLAYERS[index++] = playersCopy[randomNum];
-            playersCopy[randomNum] = playersCopy[playersCopy.length - 1];
-            playersCopy = Arrays.copyOf(playersCopy, playersCopy.length - 1);
+    private void shuffle(Random random) {
+        for (int i = players.length; i > 0; i--) {
+            int randomIndex = random.nextInt(i);
+            Player temp = players[randomIndex];
+            players[randomIndex] = players[players.length - 1];
+            players[players.length - 1] = temp;
         }
     }
 
     private void clearPoints() {
-        for (Player player : PLAYERS) {
+        for (Player player : players) {
             player.clearPoints();
         }
     }
 
     private void clear() {
-        for (Player player : PLAYERS) {
+        for (Player player : players) {
             player.clear();
         }
     }
 
-    private void generateSecretNumber() {
-        Random random = new Random();
+    private void generateSecretNumber(Random random) {
         secretNumber = random.nextInt(START, END + 1);
     }
 
     private Player changeCurrPlayer(Player currPlayer) {
-        if (currPlayer == PLAYERS[0]) return PLAYERS[1];
-        if (currPlayer == PLAYERS[1]) return PLAYERS[2];
-        return PLAYERS[0];
+        for (int i = 0; i < players.length; i++) {
+            if (currPlayer == players[i] && currPlayer != players[players.length - 1]) {
+                return players[i + 1];
+            }
+        }
+        return players[0];
     }
     
     private boolean isGuessed(Player currPlayer) {
@@ -90,7 +84,7 @@ public class GuessNumber {
         if (playerNumber == secretNumber) {
             System.out.printf("%n%s угадал число %d с %d-й попытки%n",
                     currPlayer.getName(), secretNumber, currPlayer.getCurrAttempt());
-            currPlayer.addPoints();
+            currPlayer.addPoint();
             return true;
         }
         String msg = playerNumber > secretNumber ? "больше" : "меньше";
@@ -102,13 +96,11 @@ public class GuessNumber {
         if (currPlayer.getCurrAttempt() == Player.ATTEMPTS) {
             System.out.printf("У %s закончились попытки!%n", currPlayer.getName());
         }
-        return PLAYERS[0].getCurrAttempt() != Player.ATTEMPTS ||
-                PLAYERS[1].getCurrAttempt() != Player.ATTEMPTS ||
-                PLAYERS[2].getCurrAttempt() != Player.ATTEMPTS;
+        return players[players.length - 1].getCurrAttempt() != Player.ATTEMPTS;
     }
 
     private void displayPlayersNumbers() {
-        for (Player player : PLAYERS) {
+        for (Player player : players) {
             System.out.printf("%nЧисла %s: %s", player.getName(),
                     Arrays.toString(player.getNumbers()).replaceAll("[^\\d\\s]+", ""));
         }
@@ -116,41 +108,33 @@ public class GuessNumber {
     }
 
     private void displayWinner() {
-        int player1Points = PLAYERS[0].getPoints();
-        int player2Points = PLAYERS[1].getPoints();
-        int player3Points = PLAYERS[2].getPoints();
+        for (Player player : players) {
+            boolean isWinner = true;
+            boolean isNoWinner = true;
+            boolean isDraw = true;
+            for (Player player1 : players) {
+                if (player == player1) continue;
+                if (player.getPoints() <= player1.getPoints()) isWinner = false;
+                if (player.getPoints() != 0 || player1.getPoints() != 0) isNoWinner = false;
+                if (player.getPoints() != player1.getPoints()) isDraw = false;
+            }
+            if (isWinner) {
+                System.out.printf("%nПобедил %s!%n", player.getName());
+                break;
+            }
+            if (isNoWinner) {
+                System.out.printf("%nОбщий проигрыш!%n");
+                break;
+            }
+            if (isDraw) {
+                System.out.printf("%nНичья!%n");
+                break;
+            }
+        }
 
-        if (player1Points > player2Points && player1Points > player3Points) {
-            System.out.printf("%nПобедил %s!", PLAYERS[0].getName());
+        System.out.println("\nСчёт:");
+        for (Player player : players) {
+            System.out.printf("%s: %d%n", player.getName(), player.getPoints());
         }
-        if (player2Points > player1Points && player2Points > player3Points) {
-            System.out.printf("%nПобедил %s!", PLAYERS[1].getName());
-        }
-        if (player3Points > player1Points && player3Points > player2Points) {
-            System.out.printf("%nПобедил %s!", PLAYERS[2].getName());
-        }
-        if (player1Points == player2Points && player1Points > player3Points) {
-            System.out.printf("%n%s и %s делят победу!",
-                    PLAYERS[0].getName(), PLAYERS[1].getName());
-        }
-        if (player1Points == player3Points && player1Points > player2Points) {
-            System.out.printf("%n%s и %s делят победу!",
-                    PLAYERS[0].getName(), PLAYERS[2].getName());
-        }
-        if (player2Points == player3Points && player2Points > player1Points) {
-            System.out.printf("%n%s и %s делят победу!",
-                    PLAYERS[1].getName(), PLAYERS[2].getName());
-        }
-        if (player1Points == 0 && player2Points == 0 && player3Points == 0) {
-            System.out.printf("%nОбщий проигрыш!");
-        }
-        if (player1Points == player2Points && player2Points == player3Points &&
-                player1Points != 0) {
-            System.out.printf("%nНичья!");
-        }
-        System.out.printf("%n%nСчёт:%n%s: %d%n%s: %d%n%s: %d%n",
-                PLAYERS[0].getName(), player1Points,
-                PLAYERS[1].getName(), player2Points,
-                PLAYERS[2].getName(), player3Points);
     }
 }
