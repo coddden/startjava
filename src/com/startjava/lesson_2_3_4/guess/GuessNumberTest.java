@@ -10,13 +10,7 @@ public class GuessNumberTest {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Player[] players = new Player[PLAYER_COUNT];
-
-        for (int i = 0; i < PLAYER_COUNT; i++) {
-            System.out.printf("Введите имя %d-го игрока: ", i + 1);
-            players[i] = new Player(scan.next());
-        }
-        GuessNumber game = new GuessNumber(players);
+        GuessNumber game = new GuessNumber(createPlayers(scan));
 
         String response = YES;
         while (!response.equals(NO)) {
@@ -26,5 +20,14 @@ public class GuessNumberTest {
                     "\nВведите корректный ответ [yes / no]: ");
             response = scan.next().toLowerCase();
         }
+    }
+
+    public static Player[] createPlayers(Scanner scan) {
+        Player[] players = new Player[PLAYER_COUNT];
+        for (int i = 0; i < PLAYER_COUNT; i++) {
+            System.out.printf("Введите имя %d-го игрока: ", i + 1);
+            players[i] = new Player(scan.next());
+        }
+        return players;
     }
 }

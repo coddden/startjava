@@ -18,7 +18,7 @@ public class GuessNumber {
 
     public void play(Scanner scan) {
         System.out.printf("%nИгра началась!%nУ каждого игрока по %d попыток в каждом раунде." +
-                "%nВсего %d раунда.%n", Player.ATTEMPTS, ROUND_COUNT);
+                "%nВсего раундов - %d%n", Player.ATTEMPTS, ROUND_COUNT);
         Random random = new Random();
         shuffle(random);
         clearPoints();
@@ -26,20 +26,15 @@ public class GuessNumber {
             System.out.printf("%nРаунд № %d%n", i);
             clear();
             generateSecretNumber(random);
-            Player currPlayer = players[players.length - 1];
-            do {
-                currPlayer = changeCurrPlayer(currPlayer);
-                System.out.printf("%nПопытка № %d%nЧисло вводит %s: ",
-                        currPlayer.getCurrAttempt() + 1, currPlayer.getName());
-                while (true) {
-                    try {
-                        currPlayer.addNumber(scan.nextInt());
-                        break;
-                    } catch (IllegalArgumentException e) {
-                        System.out.print(e.getMessage());
-                    }
+            roundLoop:
+            while (true) {
+                for (Player currPlayer : players) {
+                    System.out.printf("%nПопытка № %d%nЧисло вводит %s: ",
+                            currPlayer.getCurrAttempt() + 1, currPlayer.getName());
+                    inputNum(scan, currPlayer);
+                    if (isGuessed(currPlayer) || !hasAttempts(currPlayer)) break roundLoop;
                 }
-            } while (!isGuessed(currPlayer) && hasAttempts(currPlayer));
+            }
             displayPlayersNumbers();
         }
         displayWinner();
@@ -49,8 +44,8 @@ public class GuessNumber {
         for (int i = players.length; i > 0; i--) {
             int randomIndex = random.nextInt(i);
             Player temp = players[randomIndex];
-            players[randomIndex] = players[players.length - 1];
-            players[players.length - 1] = temp;
+            players[randomIndex] = players[i - 1];
+            players[i - 1] = temp;
         }
     }
 
@@ -70,13 +65,15 @@ public class GuessNumber {
         secretNumber = random.nextInt(START, END + 1);
     }
 
-    private Player changeCurrPlayer(Player currPlayer) {
-        for (int i = 0; i < players.length; i++) {
-            if (currPlayer == players[i] && currPlayer != players[players.length - 1]) {
-                return players[i + 1];
+    private void inputNum(Scanner scan, Player currPlayer) {
+        while (true) {
+            try {
+                currPlayer.addNumber(scan.nextInt());
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.print(e.getMessage());
             }
         }
-        return players[0];
     }
     
     private boolean isGuessed(Player currPlayer) {

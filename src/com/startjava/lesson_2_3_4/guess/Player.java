@@ -14,10 +14,6 @@ public class Player {
         this.name = name;
     }
 
-    public int[] getNumbers() {
-        return Arrays.copyOf(numbers, currAttempt);
-    }
-
     public String getName() {
         return name;
     }
@@ -28,6 +24,10 @@ public class Player {
 
     public int getPoints() {
         return points;
+    }
+
+    public void addPoint() {
+        points++;
     }
 
     public void clearPoints() {
@@ -52,7 +52,7 @@ public class Player {
         return numbers[currAttempt - 1];
     }
 
-    public void addPoint() {
-        points++;
+    public int[] getNumbers() {
+        return Arrays.copyOf(numbers, currAttempt);
     }
 }
