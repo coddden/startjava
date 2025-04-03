@@ -14,6 +14,14 @@ public class Player {
         this.name = name;
     }
 
+    public int getNumber() {
+        return numbers[currAttempt - 1];
+    }
+
+    public int[] getNumbers() {
+        return Arrays.copyOf(numbers, currAttempt);
+    }
+
     public void addNumber(int number) {
         if (number < GuessNumber.START || number > GuessNumber.END) {
             throw new IllegalArgumentException("\nЧисло должно входить в отрезок " +
@@ -21,14 +29,6 @@ public class Player {
                     "Попробуйте еще раз: ");
         }
         numbers[currAttempt++] = number;
-    }
-
-    public int getNumber() {
-        return numbers[currAttempt - 1];
-    }
-
-    public int[] getNumbers() {
-        return Arrays.copyOf(numbers, currAttempt);
     }
 
     public String getName() {
@@ -39,12 +39,12 @@ public class Player {
         return currAttempt;
     }
 
-    public void addPoint() {
-        points++;
-    }
-
     public int getPoints() {
         return points;
+    }
+
+    public void addPoint() {
+        points++;
     }
 
     public void clearPoints() {
