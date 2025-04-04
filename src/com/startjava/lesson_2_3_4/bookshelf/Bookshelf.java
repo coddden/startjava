@@ -1,8 +1,6 @@
 package com.startjava.lesson_2_3_4.bookshelf;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Bookshelf {
 
@@ -12,46 +10,41 @@ public class Bookshelf {
     private int bookCount = 0;
 
     public Book[] getBooks() {
-        return books;
+        return Arrays.copyOf(books, bookCount);
     }
 
     public int getBookCount() {
         return bookCount;
     }
 
-    public int getEmptyShelfCount() {
+    public int countEmptyShelves() {
         return books.length - bookCount;
     }
 
-    public String addBook(Book book) {
+    public boolean addBook(Book book) {
+        if (bookCount == SHELF_COUNT) {
+            throw new ArrayIndexOutOfBoundsException("\nВ шкафу закончилось место! " +
+                    "Книга не может быть сохранена.");
+        }
+        if (book.toString().length() > SHELF_LENGTH) {
+            throw new IllegalArgumentException("\nКнига не помещается на полку!");
+        }
         books[bookCount++] = book;
-        return "\nКнига успешно добавлена!";
+        return true;
     }
 
-    public Book find(Scanner scan) {
-        if (bookCount == 0) {
-            throw new NoSuchElementException("\nКнига не может быть найдена! Шкаф пуст.");
-        }
-        System.out.print("\nВведите название книги: ");
-        String title = scan.nextLine();
+    public Book find(String title) {
         for (int i = 0; i < bookCount; i++) {
             if (title.equals(books[i].getTitle())) {
                 return books[i];
             }
         }
-        throw new NoSuchElementException("\nКнига не найдена!");
+        return null;
     }
 
-    public String delete(Scanner scan) {
-        if (bookCount == 0) {
-            throw new NoSuchElementException("\nКнига не может быть удалена! Шкаф пуст.");
-        }
-        Book book;
-        try {
-            book = find(scan);
-        } catch (NoSuchElementException e) {
-            throw new IllegalStateException("\nКнига не найдена и не может быть удалена!");
-        }
+    public boolean delete(String title) {
+        Book book = find(title);
+        if (book == null) return false;
         for (int i = 0; i < bookCount; i++) {
             if (book.equals(books[i])) {
                 if (i != books.length - 1) {
@@ -62,15 +55,12 @@ public class Bookshelf {
                 break;
             }
         }
-        return "\nКнига успешно удалена!";
+        return true;
     }
 
-    public String clearBookshelf() {
-        if (bookCount == 0) {
-            throw new NoSuchElementException("\nШкаф уже очищен!");
-        }
+    public boolean clearBookshelf() {
         Arrays.fill(books, 0, bookCount, null);
         bookCount = 0;
-        return "\nШкаф успешно очищен!";
+        return true;
     }
 }

@@ -1,7 +1,6 @@
 package com.startjava.lesson_2_3_4.bookshelf;
 
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class BookshelfMain {
@@ -37,13 +36,31 @@ public class BookshelfMain {
             scan.nextLine();
             try {
                 switch (option) {
-                    case 1 -> displayText(bookshelf1.addBook(createBook(scan, bookshelf1)));
-                    case 2 -> displayText("\n" + bookshelf1.find(scan) + "\n");
-                    case 3 -> displayText(bookshelf1.delete(scan));
-                    case 4 -> displayText(bookshelf1.clearBookshelf());
+                    case 1 -> {
+                        if (bookshelf1.addBook(createBook(scan))) {
+                            displayText("\nКнига успешно добавлена!\n");
+                        }
+                    }
+                    case 2 -> {
+                        System.out.print("\nВведите название книги: ");
+                        Book book = bookshelf1.find(scan.nextLine());
+                        displayText(book == null ?
+                                "\nКнига не найдена!\n" :
+                                "\n" + book + "\n");
+                    }
+                    case 3 -> {
+                        System.out.print("\nВведите название книги: ");
+                        displayText(bookshelf1.delete(scan.nextLine()) ?
+                                "\nКнига успешно удалена!\n" :
+                                "\nКнига не найдена и не может быть удалена!\n");
+                    }
+                    case 4 -> {
+                        if (bookshelf1.clearBookshelf()) {
+                            displayText("\nШкаф успешно очищен!\n");
+                        }
+                    }
                 }
-            } catch (IllegalStateException | IllegalArgumentException |
-                     NoSuchElementException | ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -60,7 +77,7 @@ public class BookshelfMain {
     public static String createBookshelf(Bookshelf bookshelf1) {
         StringBuilder bookshelf = new StringBuilder();
         bookshelf.append("\nВ шкафу книг - ").append(bookshelf1.getBookCount())
-                .append(" | Свободных полок - ").append(bookshelf1.getEmptyShelfCount())
+                .append(" | Свободных полок - ").append(bookshelf1.countEmptyShelves())
                 .append("\n");
         for (int i = 0; i < bookshelf1.getBookCount(); i++) {
             bookshelf.append("\n").append("|").append(bookshelf1.getBooks()[i])
@@ -91,22 +108,14 @@ public class BookshelfMain {
         }
     }
 
-    private static Book createBook(Scanner scan, Bookshelf bookshelf1) {
-        if (bookshelf1.getBookCount() == Bookshelf.SHELF_COUNT) {
-            throw new ArrayIndexOutOfBoundsException("\nВ шкафу закончилось место! " +
-                    "Книга не может быть сохранена.");
-        }
+    private static Book createBook(Scanner scan) {
         String[] bookAttributes = {"Имя автора: ", "Название: ", "Год издания: "};
         System.out.println();
         for (int i = 0; i < bookAttributes.length; i++) {
             displayText(bookAttributes[i]);
             bookAttributes[i] = scan.nextLine();
         }
-        Book book = new Book(bookAttributes);
-        if (book.toString().length() > Bookshelf.SHELF_LENGTH) {
-            throw new IllegalArgumentException("\nКнига не помещается на полку!");
-        }
-        return book;
+        return new Book(bookAttributes);
     }
 
     private static void displayText(String text) {
