@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Bookshelf {
 
-    public static final int SHELF_LENGTH = 40;
+    public static final int SHELF_LEN = 40;
     public static final int SHELF_COUNT = 10;
     private final Book[] books = new Book[SHELF_COUNT];
     private int bookCount = 0;
@@ -21,12 +21,12 @@ public class Bookshelf {
         return books.length - bookCount;
     }
 
-    public boolean addBook(Book book) {
-        if (bookCount == SHELF_COUNT) {
+    public boolean add(Book book) {
+        if (bookCount >= SHELF_COUNT) {
             throw new ArrayIndexOutOfBoundsException("\nВ шкафу закончилось место! " +
                     "Книга не может быть сохранена.");
         }
-        if (book.toString().length() > SHELF_LENGTH) {
+        if (book.toString().length() > SHELF_LEN) {
             throw new IllegalArgumentException("\nКнига не помещается на полку!");
         }
         books[bookCount++] = book;
@@ -47,20 +47,19 @@ public class Bookshelf {
         if (book == null) return false;
         for (int i = 0; i < bookCount; i++) {
             if (book.equals(books[i])) {
-                if (i != books.length - 1) {
-                    System.arraycopy(books, i + 1, books, i, (books.length - 1) - i);
-                }
-                books[bookCount - 1] = null;
                 bookCount--;
+                if (i != bookCount) {
+                    System.arraycopy(books, i + 1, books, i, bookCount - i);
+                }
+                books[bookCount] = null;
                 break;
             }
         }
         return true;
     }
 
-    public boolean clearBookshelf() {
+    public void clearBookshelf() {
         Arrays.fill(books, 0, bookCount, null);
         bookCount = 0;
-        return true;
     }
 }

@@ -19,47 +19,17 @@ public class BookshelfMain {
 
     public static void main(String[] args) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
-        Bookshelf bookshelf1 = new Bookshelf();
+        Bookshelf bookshelf = new Bookshelf();
         typeGreeting();
-        int option = 0;
-        while (option != MENU_END) {
+        int menuItem = 0;
+        while (menuItem != MENU_END) {
             displayText("\nДля продолжения работы нажмите клавишу <Enter>");
             if (!scan.nextLine().isEmpty()) continue;
-            if (bookshelf1.getBookCount() == 0) {
-                displayText("\nШкаф пуст! Вы можете добавить в него первую книгу.");
-            }
-            if (bookshelf1.getBookCount() > 0) {
-                displayText(createBookshelf(bookshelf1));
-            }
-            displayText(MENU);
-            option = selectOption(scan);
+            displayOverview(bookshelf);
+            menuItem = selectMenuItem(scan);
             scan.nextLine();
             try {
-                switch (option) {
-                    case 1 -> {
-                        if (bookshelf1.addBook(createBook(scan))) {
-                            displayText("\nКнига успешно добавлена!\n");
-                        }
-                    }
-                    case 2 -> {
-                        System.out.print("\nВведите название книги: ");
-                        Book book = bookshelf1.find(scan.nextLine());
-                        displayText(book == null ?
-                                "\nКнига не найдена!\n" :
-                                "\n" + book + "\n");
-                    }
-                    case 3 -> {
-                        System.out.print("\nВведите название книги: ");
-                        displayText(bookshelf1.delete(scan.nextLine()) ?
-                                "\nКнига успешно удалена!\n" :
-                                "\nКнига не найдена и не может быть удалена!\n");
-                    }
-                    case 4 -> {
-                        if (bookshelf1.clearBookshelf()) {
-                            displayText("\nШкаф успешно очищен!\n");
-                        }
-                    }
-                }
+                choseAction(scan, bookshelf, menuItem);
             } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -74,37 +44,69 @@ public class BookshelfMain {
         }
     }
 
-    public static String createBookshelf(Bookshelf bookshelf1) {
-        StringBuilder bookshelf = new StringBuilder();
-        bookshelf.append("\nВ шкафу книг - ").append(bookshelf1.getBookCount())
-                .append(" | Свободных полок - ").append(bookshelf1.countEmptyShelves())
-                .append("\n");
-        for (int i = 0; i < bookshelf1.getBookCount(); i++) {
-            bookshelf.append("\n").append("|").append(bookshelf1.getBooks()[i])
-                    .append(" ".repeat(Bookshelf.SHELF_LENGTH - bookshelf1.getBooks()[i].toString().length()))
-                    .append("|").append("\n").append("|").append("-".repeat(Bookshelf.SHELF_LENGTH))
-                    .append("|");
-        }
-        return bookshelf.toString();
+    private static void displayOverview(Bookshelf bookshelf) {
+        displayText(bookshelf.getBookCount() > 0 ? createBookshelf(bookshelf) :
+                "\nШкаф пуст! Вы можете добавить в него первую книгу.");
+        displayText(MENU);
     }
 
-    public static int selectOption(Scanner scan) {
+    public static String createBookshelf(Bookshelf bookshelf) {
+        StringBuilder bookshelfState = new StringBuilder();
+        bookshelfState.append("\nВ шкафу книг - ").append(bookshelf.getBookCount())
+                .append(" | Свободных полок - ").append(bookshelf.countEmptyShelves())
+                .append("\n");
+        for (Book book : bookshelf.getBooks()) {
+            int spacesCount = Bookshelf.SHELF_LEN - book.toString().length();
+            bookshelfState.append("\n|").append(book).append(" ".repeat(spacesCount)).append("|")
+                    .append("\n|").append("-".repeat(Bookshelf.SHELF_LEN)).append("|");
+        }
+        return bookshelfState.toString();
+    }
+
+    public static int selectMenuItem(Scanner scan) {
         String msg = "Выберите пункт меню: ";
-        int option;
+        int menuItem;
         while (true) {
             displayText(msg);
             try {
-                option = scan.nextInt();
+                menuItem = scan.nextInt();
             } catch (InputMismatchException e) {
                 msg = "Ошибка: введите номер из списка: ";
                 scan.nextLine();
                 continue;
             }
-            if (option < MENU_START || option > MENU_END) {
+            if (menuItem < MENU_START || menuItem > MENU_END) {
                 msg = "Ошибка: введите номер из списка: ";
                 continue;
             }
-            return option;
+            return menuItem;
+        }
+    }
+
+    private static void choseAction(Scanner scan, Bookshelf bookshelf, int menuItem) {
+        switch (menuItem) {
+            case 1 -> {
+                if (bookshelf.add(createBook(scan))) {
+                    displayText("\nКнига успешно добавлена!\n");
+                }
+            }
+            case 2 -> {
+                System.out.print("\nВведите название книги: ");
+                Book book = bookshelf.find(scan.nextLine());
+                displayText(book == null ?
+                        "\nКнига не найдена!\n" :
+                        "\n" + book + "\n");
+            }
+            case 3 -> {
+                System.out.print("\nВведите название книги: ");
+                displayText(bookshelf.delete(scan.nextLine()) ?
+                        "\nКнига успешно удалена!\n" :
+                        "\nКнига не найдена и не может быть удалена!\n");
+            }
+            case 4 -> {
+                bookshelf.clearBookshelf();
+                displayText("\nШкаф успешно очищен!\n");
+            }
         }
     }
 
