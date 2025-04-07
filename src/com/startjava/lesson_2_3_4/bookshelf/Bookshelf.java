@@ -1,16 +1,22 @@
 package com.startjava.lesson_2_3_4.bookshelf;
 
+import com.startjava.lesson_2_3_4.exception.FullBookshelfException;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Bookshelf {
 
-    public static final int SHELF_LEN = 40;
     public static final int SHELF_COUNT = 10;
     private final Book[] books = new Book[SHELF_COUNT];
+    private int shelfLen;
     private int bookCount = 0;
 
     public Book[] getBooks() {
         return Arrays.copyOf(books, bookCount);
+    }
+
+    public int getShelfLen() {
+        return shelfLen;
     }
 
     public int getBookCount() {
@@ -21,16 +27,14 @@ public class Bookshelf {
         return books.length - bookCount;
     }
 
-    public boolean add(Book book) {
+    public void add(Book book) {
         if (bookCount >= SHELF_COUNT) {
-            throw new ArrayIndexOutOfBoundsException("\nВ шкафу закончилось место! " +
+            throw new FullBookshelfException("\nВ шкафу закончилось место! " +
                     "Книга не может быть сохранена.");
         }
-        if (book.toString().length() > SHELF_LEN) {
-            throw new IllegalArgumentException("\nКнига не помещается на полку!");
-        }
         books[bookCount++] = book;
-        return true;
+        calcShelfLen();
+        Console.displayText("\nКнига успешно добавлена!\n");
     }
 
     public Book find(String title) {
@@ -52,6 +56,7 @@ public class Bookshelf {
                     System.arraycopy(books, i + 1, books, i, bookCount - i);
                 }
                 books[bookCount] = null;
+                calcShelfLen();
                 break;
             }
         }
@@ -61,5 +66,12 @@ public class Bookshelf {
     public void clearBookshelf() {
         Arrays.fill(books, 0, bookCount, null);
         bookCount = 0;
+        Console.displayText("\nШкаф успешно очищен!\n");
+    }
+
+    public void calcShelfLen() {
+        Book[] booksCopy = Arrays.copyOf(books, bookCount);
+        Arrays.sort(booksCopy, Comparator.comparing(o -> o.toString().length()));
+        shelfLen = booksCopy[bookCount - 1].toString().length();
     }
 }
