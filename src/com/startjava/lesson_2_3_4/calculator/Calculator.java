@@ -1,5 +1,7 @@
 package com.startjava.lesson_2_3_4.calculator;
 
+import com.startjava.lesson_2_3_4.exception.ExpressionLengthException;
+
 public class Calculator {
 
     private static final int EXPR_SIZE = 3;

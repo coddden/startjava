@@ -1,5 +1,7 @@
 package com.startjava.lesson_2_3_4.calculator;
 
+import com.startjava.lesson_2_3_4.exception.ExpressionLengthException;
+
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
@@ -17,7 +19,7 @@ public class CalculatorTest {
                 try {
                     displayResult(expr, Calculator.calculate(expr));
                 } catch (ArithmeticException | UnsupportedOperationException |
-                        IllegalArgumentException | ExpressionLengthException e) {
+                         IllegalArgumentException | ExpressionLengthException e) {
                     System.out.println(e.getMessage());
                 }
             }
