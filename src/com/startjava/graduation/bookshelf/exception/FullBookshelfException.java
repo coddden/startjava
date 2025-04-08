@@ -1,4 +1,4 @@
-package com.startjava.lesson_2_3_4.bookshelf.exception;
+package com.startjava.graduation.bookshelf.exception;
 
 public class FullBookshelfException extends RuntimeException {
     public FullBookshelfException(String msg) {
