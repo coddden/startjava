@@ -1,6 +1,6 @@
-package com.startjava.lesson_2_3_4.bookshelf;
+package com.startjava.graduation.bookshelf;
 
-import com.startjava.lesson_2_3_4.exception.FullBookshelfException;
+import com.startjava.graduation.bookshelf.exception.FullBookshelfException;
 import java.util.Arrays;
 import java.util.Comparator;
 
