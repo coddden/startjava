@@ -1,6 +1,6 @@
 package com.startjava.lesson_2_3_4.calculator;
 
-import com.startjava.lesson_2_3_4.exception.ExpressionLengthException;
+import com.startjava.lesson_2_3_4.calculator.exception.ExpressionLengthException;
 
 import java.text.DecimalFormat;
 import java.util.Scanner;
