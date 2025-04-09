@@ -9,18 +9,18 @@ public class BookshelfMain {
         Scanner scan = new Scanner(System.in);
         Bookshelf bookshelf = new Bookshelf();
         Console.typeText("\nДобро пожаловать!");
-        Action action;
+        MenuItem menuItem;
         do {
             waitToContinue(scan);
             Console.displayOverview(bookshelf, createBookshelf(bookshelf));
-            action = selectAction(scan);
+            menuItem = selectItem(scan);
             scan.nextLine();
             try {
-                executeAction(scan, bookshelf, action);
+                executeAction(scan, bookshelf, menuItem);
             } catch (FullBookshelfException | IllegalArgumentException e) {
                 Console.displayText(e.getMessage());
             }
-        } while (action != Action.EXIT);
+        } while (menuItem != MenuItem.EXIT);
         Console.displayText("\nПрограмма завершена!\n");
     }
 
@@ -44,38 +44,27 @@ public class BookshelfMain {
         return bookshelfState.toString();
     }
 
-    public static Action selectAction(Scanner scan) {
+    public static MenuItem selectItem(Scanner scan) {
         String msg = "Выберите пункт меню: ";
-        Action action;
+        MenuItem menuItem;
         while (true) {
             Console.displayText(msg);
             try {
-                action = Action.getAction(scan.nextInt());
+                menuItem = MenuItem.getMenuItemName(scan.nextInt());
             } catch (InputMismatchException | IllegalArgumentException e) {
                 msg = "Ошибка: введите номер из списка: ";
                 scan.nextLine();
                 continue;
             }
-            return action;
+            return menuItem;
         }
     }
 
-    private static void executeAction(Scanner scan, Bookshelf bookshelf, Action menuItem) {
+    private static void executeAction(Scanner scan, Bookshelf bookshelf, MenuItem menuItem) {
         switch (menuItem) {
             case ADD -> bookshelf.add(createBook(scan));
-            case FIND -> {
-                Console.displayText("\nВведите название книги: ");
-                Book book = bookshelf.find(scan.nextLine());
-                Console.displayText(book == null ?
-                        "\nКнига не найдена!\n" :
-                        "\n" + book + "\n");
-            }
-            case DELETE -> {
-                Console.displayText("\nВведите название книги: ");
-                Console.displayText(bookshelf.delete(scan.nextLine()) ?
-                        "\nКнига успешно удалена!\n" :
-                        "\nКнига не найдена и не может быть удалена!\n");
-            }
+            case FIND -> find(scan, bookshelf);
+            case DELETE -> delete(scan, bookshelf);
             case CLEAR -> bookshelf.clear();
         }
     }
@@ -88,5 +77,20 @@ public class BookshelfMain {
             bookAttributes[i] = scan.nextLine();
         }
         return new Book(bookAttributes);
+    }
+
+    private static void find(Scanner scan, Bookshelf bookshelf) {
+        Console.displayText("\nВведите название книги: ");
+        Book book = bookshelf.find(scan.nextLine());
+        Console.displayText(book == null ?
+                "\nКнига не найдена!\n" :
+                "\n" + book + "\n");
+    }
+
+    private static void delete(Scanner scan, Bookshelf bookshelf) {
+        Console.displayText("\nВведите название книги: ");
+        Console.displayText(bookshelf.delete(scan.nextLine()) ?
+                "\nКнига успешно удалена!\n" :
+                "\nКнига не найдена и не может быть удалена!\n");
     }
 }

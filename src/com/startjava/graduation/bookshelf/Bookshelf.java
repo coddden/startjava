@@ -32,7 +32,9 @@ public class Bookshelf {
                     "Книга не может быть сохранена.");
         }
         books[bookCount++] = book;
-        calcShelfLen(book.toString().length());
+        if (book.toString().length() > shelfLen) {
+            shelfLen = book.toString().length();
+        }
         Console.displayText("\nКнига успешно добавлена!\n");
     }
 
@@ -54,7 +56,7 @@ public class Bookshelf {
                     System.arraycopy(books, i + 1, books, i, bookCount - i);
                 }
                 books[bookCount] = null;
-                calcShelfLen(bookLen + 1);
+                updateShelfLen(bookLen);
                 return true;
             }
         }
@@ -67,13 +69,11 @@ public class Bookshelf {
         Console.displayText("\nШкаф успешно очищен!\n");
     }
 
-    public void calcShelfLen(int bookLen) {
+    public void updateShelfLen(int bookLen) {
         if (bookLen < shelfLen) return;
         shelfLen = 0;
-        for (int i = 0; i < bookCount; i++) {
-            if (shelfLen < books[i].toString().length()) {
-                shelfLen = books[i].toString().length();
-            }
+        for (Book book : getBooks()) {
+            shelfLen = Math.max(shelfLen, book.toString().length());
         }
     }
 }
