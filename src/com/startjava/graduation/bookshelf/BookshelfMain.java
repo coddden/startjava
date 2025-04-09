@@ -5,46 +5,22 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BookshelfMain {
-
-    private static final int MENU_SIZE = 5;
-
-    public enum MenuItems {
-        ITEM_1(1),
-        ITEM_2(2),
-        ITEM_3(3),
-        ITEM_4(4),
-        ITEM_5(5);
-
-        private final int num;
-
-        MenuItems(int num) {
-            this.num = num;
-        }
-
-        public static MenuItems fromItem(int num) {
-            for (MenuItems item : values()) {
-                if (item.num == num) return item;
-            }
-            throw new IllegalArgumentException("Ошибка: введите номер из списка: ");
-        }
-    }
-
     public static void main(String[] args) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         Bookshelf bookshelf = new Bookshelf();
         Console.typeText("\nДобро пожаловать!");
-        MenuItems menuItem;
+        Action action;
         do {
             waitToContinue(scan);
             Console.displayOverview(bookshelf, createBookshelf(bookshelf));
-            menuItem = selectMenuItem(scan);
+            action = selectAction(scan);
             scan.nextLine();
             try {
-                choseAction(scan, bookshelf, menuItem);
+                executeAction(scan, bookshelf, action);
             } catch (FullBookshelfException | IllegalArgumentException e) {
                 Console.displayText(e.getMessage());
             }
-        } while (menuItem.num != MENU_SIZE);
+        } while (action != Action.EXIT);
         Console.displayText("\nПрограмма завершена!\n");
     }
 
@@ -68,39 +44,39 @@ public class BookshelfMain {
         return bookshelfState.toString();
     }
 
-    public static MenuItems selectMenuItem(Scanner scan) {
+    public static Action selectAction(Scanner scan) {
         String msg = "Выберите пункт меню: ";
-        MenuItems menuItem;
+        Action action;
         while (true) {
             Console.displayText(msg);
             try {
-                menuItem = MenuItems.fromItem(scan.nextInt());
+                action = Action.getAction(scan.nextInt());
             } catch (InputMismatchException | IllegalArgumentException e) {
                 msg = "Ошибка: введите номер из списка: ";
                 scan.nextLine();
                 continue;
             }
-            return menuItem;
+            return action;
         }
     }
 
-    private static void choseAction(Scanner scan, Bookshelf bookshelf, MenuItems menuItem) {
+    private static void executeAction(Scanner scan, Bookshelf bookshelf, Action menuItem) {
         switch (menuItem) {
-            case ITEM_1 -> bookshelf.add(createBook(scan));
-            case ITEM_2 -> {
+            case ADD -> bookshelf.add(createBook(scan));
+            case FIND -> {
                 Console.displayText("\nВведите название книги: ");
                 Book book = bookshelf.find(scan.nextLine());
                 Console.displayText(book == null ?
                         "\nКнига не найдена!\n" :
                         "\n" + book + "\n");
             }
-            case ITEM_3 -> {
+            case DELETE -> {
                 Console.displayText("\nВведите название книги: ");
                 Console.displayText(bookshelf.delete(scan.nextLine()) ?
                         "\nКнига успешно удалена!\n" :
                         "\nКнига не найдена и не может быть удалена!\n");
             }
-            case ITEM_4 -> bookshelf.clearBookshelf();
+            case CLEAR -> bookshelf.clear();
         }
     }
 
