@@ -14,7 +14,7 @@ public enum MenuItem {
         this.item = item;
     }
 
-    public static MenuItem getMenuItemName(int num) {
+    public static MenuItem getName(int num) {
         if (num < ADD.item || num > EXIT.item) {
             throw new IllegalArgumentException("\nОшибка: введите номер из списка: ");
         }

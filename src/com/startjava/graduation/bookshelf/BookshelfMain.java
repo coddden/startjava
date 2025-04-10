@@ -50,7 +50,7 @@ public class BookshelfMain {
         while (true) {
             Console.displayText(msg);
             try {
-                menuItem = MenuItem.getMenuItemName(scan.nextInt());
+                menuItem = MenuItem.getName(scan.nextInt());
             } catch (InputMismatchException | IllegalArgumentException e) {
                 msg = "Ошибка: введите номер из списка: ";
                 scan.nextLine();
