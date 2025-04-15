@@ -1,4 +1,4 @@
-INSERT INTO robots_and_jaegers(model_name, mark, height, weight, status, origin, launch, kaiju_kill)
+INSERT INTO jaegers(model_name, mark, height, weight, status, origin, launch, kaiju_kill)
     VALUES
         ('Gipsy Danger',    '3', '79.25', '1.980', 'Destroyed', 'USA',       '2017-07-10', '9'),
         ('Striker Eureka',  '5', '76.2',  '1.850', 'Active',    'Australia', '2019-11-02', '11'),

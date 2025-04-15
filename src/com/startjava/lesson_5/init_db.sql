@@ -1,13 +1,13 @@
-\c robots_and_jaegers;
+\c robots;
 
-DROP TABLE robots_and_jaegers;
+DROP TABLE IF EXISTS jaegers;
 
-CREATE TABLE robots_and_jaegers (
+CREATE TABLE jaegers (
     id         SERIAL PRIMARY KEY,
     model_name TEXT,
     mark       INTEGER,
     height     REAL,
-    weight     REAL,
+    weight     NUMERIC,
     status     TEXT,
     origin     TEXT,
     launch     DATE,
